@@ -1,0 +1,18 @@
+#  For Foundry
+
+# Compiler files
+crowd-funding-contract/cache/
+crowd-funding-contract/out/
+
+# Ignores development broadcast logs
+crowd-funding-contract/!/broadcast
+crowd-funding-contract/broadcast/*/31337/
+crowd-funding-contract/broadcast/**/dry-run/
+
+# Docs
+crowd-funding-contract/docs/
+
+# Dotenv file
+.crowd-funding-contract/.env
+
+
