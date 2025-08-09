@@ -6,7 +6,7 @@ import {Test, console2} from "forge-std/Test.sol";
 import {CrowdFundingFactory} from "../../src/CrowdFundingFactory.sol";
 import {DeployCrowdFundingFactory} from "../../script/DeployCrowdFundingFactory.s.sol";
 
-contract CrowdFundingFactoryTest {
+contract CrowdFundingFactoryTest is Test {
     CrowdFundingFactory factory;
 
     function setUp() public {
