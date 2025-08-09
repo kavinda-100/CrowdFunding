@@ -14,7 +14,7 @@ contract CrowdFundingFactoryTest is Test {
         factory = deployer.run();
     }
 
-    function testFactoryDeployment() public view {
+    function test_FactoryDeployment() public view {
         console2.log("CrowdFundingFactory test");
         console2.log("CrowdFundingFactory deployed at:", address(factory));
     }
