@@ -6,9 +6,9 @@
 ![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white)
 ![Foundry](https://img.shields.io/badge/Foundry-000000?style=for-the-badge&logo=ethereum&logoColor=white)
 
-**A decentralized crowdfunding platform built on Ethereum** 💰
+- **A decentralized crowdfunding platform built on Ethereum** 💰
 
-*Empowering creators and supporting innovators through blockchain technology*
+- *Empowering creators and supporting innovators through blockchain technology*
 
 </div>
 
