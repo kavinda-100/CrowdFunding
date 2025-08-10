@@ -426,4 +426,26 @@ contract CrowdFundingTest is Test {
         crowdFundingContract.removeTier(100); // Invalid index
         vm.stopPrank();
     }
+
+    // ------------------------------------------ Toggle Pause test ------------------------------------------
+
+    /**
+     * @notice This function tests the toggle pause functionality of the campaign.
+     * It checks that the owner can pause and unpause the campaign successfully.
+     */
+    function test_togglePause() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // Check initial pause state
+        assertFalse(crowdFundingContract.getIsPaused());
+
+        // Owner toggles pause
+        vm.startPrank(user1);
+        crowdFundingContract.togglePause();
+        assertTrue(crowdFundingContract.getIsPaused());
+
+        // Owner toggles pause again
+        crowdFundingContract.togglePause();
+        assertFalse(crowdFundingContract.getIsPaused());
+
+        vm.stopPrank();
+    }
 }

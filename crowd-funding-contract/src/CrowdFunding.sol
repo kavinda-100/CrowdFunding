@@ -316,6 +316,14 @@ contract CrowdFunding is Ownable {
     }
 
     /**
+     * @notice This function allows users to check if the campaign is paused.
+     * @dev It returns the pause state of the contract.
+     */
+    function getIsPaused() external view returns (bool) {
+        return pause; // Returns the current pause state of the contract
+    }
+
+    /**
      * @notice This function allows users to view the campaign name.
      */
     function getCampaignName() external view returns (string memory) {
