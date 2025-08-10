@@ -14,15 +14,11 @@ contract CrowdFundingTest is Test {
 
     uint256 public usersInitialBalance = 10 ether;
 
-    function setUp() public {
-        crowdFundingContract = new CrowdFunding({
-            _name: "TestCampaign",
-            _description: "This is a test campaign for CrowdFunding",
-            _goal: 100 wei,
-            _deadline: 1,
-            _owner: owner
-        });
+    // --------------------- Events ---------------------
+    event CampaignFunded(address indexed donor, uint256 amount);
+    event CampaignWithdrawn(address indexed owner, uint256 amount);
 
+    function setUp() public {
         // Set initial balances for users
         vm.deal(user1, usersInitialBalance);
         vm.deal(user2, usersInitialBalance);
@@ -50,6 +46,22 @@ contract CrowdFundingTest is Test {
         _;
     }
 
+    /**
+     * @param _owner The address of the owner of the campaign.
+     * @notice This modifier creates tiers for the CrowdFunding contract.
+     */
+    modifier CreateAnTiers(address _owner) {
+        vm.startPrank(_owner);
+
+        // Create a new Tier instances
+        crowdFundingContract.addTier({_name: "Basic", _amount: 10 wei});
+        crowdFundingContract.addTier({_name: "Standard", _amount: 20 wei});
+        crowdFundingContract.addTier({_name: "Pro", _amount: 25 wei});
+
+        vm.stopPrank();
+        _;
+    }
+
     // --------------------------- CrowdFunding contract creation tests ---------------------------
 
     /**
@@ -71,5 +83,25 @@ contract CrowdFundingTest is Test {
         assertEq(200 wei, newCampaign.getCampaignGoal());
         assertEq(block.timestamp + (2 * 1 days), newCampaign.getCampaignDeadline());
         assertEq(owner, newCampaign.owner());
+    }
+
+    // ---------------------------------- Fund function related tests ---------------------------
+
+    /**
+     * @notice This function tests the funding of a campaign.
+     * It checks if the funding is successful and updates the campaign balance and backers.
+     */
+    function test_fundCampaign() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // User1 funds the campaign
+        // 0 -> is the tier index
+        vm.startPrank(user1);
+        crowdFundingContract.fund{value: 10 wei}(0); // 0 -> Basic tier
+
+        // Check that the funding was successful
+        assertEq(crowdFundingContract.getFundingTierInfo(0).backers, 1);
+        assertEq(crowdFundingContract.getFundingTierInfo(0).amount, 10 wei);
+        assertEq(crowdFundingContract.getCampaignBalance(), 10 wei);
+
+        vm.stopPrank();
     }
 }
