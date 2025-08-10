@@ -83,6 +83,7 @@ contract CrowdFundingTest is Test {
         assertEq(200 wei, newCampaign.getCampaignGoal());
         assertEq(block.timestamp + (2 * 1 days), newCampaign.getCampaignDeadline());
         assertEq(owner, newCampaign.owner());
+        assert(newCampaign.getCampaignStatusRow() == newCampaign.getCampaignStatus());
     }
 
     // ---------------------------------- Fund function related tests ---------------------------
