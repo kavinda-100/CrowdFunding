@@ -58,11 +58,13 @@ contract CrowdFundingFuzzTest is Test {
     function test_fuzzWithdrawFunds(
         string memory _name,
         string memory _description,
+        uint256 _deadline,
         address _owner,
         address _user,
         string memory _tier_name
     ) public {
         // constraints
+        _deadline = bound(_deadline, 1, 365); // 1 to 365 days
         vm.assume(_owner != address(0));
         vm.assume(_user != address(0));
 
@@ -73,8 +75,13 @@ contract CrowdFundingFuzzTest is Test {
 
         vm.startPrank(_owner);
         // create an instance of the CrowdFunding contract
-        CrowdFunding newCampaign =
-            new CrowdFunding({_name: _name, _description: _description, _goal: 100 wei, _deadline: 1, _owner: _owner});
+        CrowdFunding newCampaign = new CrowdFunding({
+            _name: _name,
+            _description: _description,
+            _goal: 100 wei,
+            _deadline: _deadline,
+            _owner: _owner
+        });
         // Create a tier in the campaign
         newCampaign.addTier(_tier_name, _tier_amount);
         vm.stopPrank();
@@ -93,7 +100,7 @@ contract CrowdFundingFuzzTest is Test {
         assertEq(newCampaign.getCampaignBalance(), _tier_amount);
 
         // warp the day
-        vm.warp(block.timestamp + 2 days);
+        vm.warp(block.timestamp + (_deadline * 1 days));
 
         // Withdraw funds from the campaign
         vm.startPrank(_owner);
