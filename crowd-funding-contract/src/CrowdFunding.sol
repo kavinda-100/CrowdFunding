@@ -60,6 +60,9 @@ contract CrowdFunding is Ownable {
      * @dev It reverts if the campaign is not active.
      */
     modifier onlyActiveCampaign() {
+        // Check the campaign status
+        _checkCampaignStatus();
+
         if (currentCampaignStatus != CampaignStatus.Active) {
             revert CrowdFunding__CampaignHasEnded();
         }

@@ -102,6 +102,7 @@ contract CrowdFundingTest is Test {
         assertEq(crowdFundingContract.getFundingTierInfo(0).backers, 1);
         assertEq(crowdFundingContract.getFundingTierInfo(0).amount, 10 wei);
         assertEq(crowdFundingContract.getCampaignBalance(), 10 wei);
+        assert(crowdFundingContract.getCampaignStatusRow() == crowdFundingContract.getCampaignStatus());
 
         vm.stopPrank();
     }
@@ -172,6 +173,28 @@ contract CrowdFundingTest is Test {
         // Check that the funding was successful
         assertEq(crowdFundingContract.getBackerAmount(user1), 10 wei); // total contribution
         assertTrue(crowdFundingContract.getBackerHasFundedTier(user1, 0)); // check if Basic tier is funded
+
+        vm.stopPrank();
+    }
+
+    /**
+     * @notice This function tests the funding of a campaign after the deadline.
+     * @dev It checks that the transaction reverts with the correct error message.
+     */
+    function test_CanNotFundAfterDeadline() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // Fast forward time to after the campaign deadline
+        vm.warp(block.timestamp + 2 days + 1);
+
+        // User1 tries to fund the campaign after the deadline
+        vm.startPrank(user1);
+
+        // Expect revert due to campaign has ended
+        vm.expectRevert(CrowdFunding.CrowdFunding__CampaignHasEnded.selector);
+        crowdFundingContract.fund{value: 10 wei}(0); // 0 -> Basic tier
+
+        // Check the campaign status
+        // 2 -> Failed (Enum)
+        assertEq(2, uint256(crowdFundingContract.getCampaignStatus()));
 
         vm.stopPrank();
     }
