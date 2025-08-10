@@ -300,4 +300,85 @@ contract CrowdFundingTest is Test {
 
         vm.stopPrank();
     }
+
+    // ---------------------------------- Campaign Tiers Tests ---------------------------
+
+    /**
+     * @notice This function tests the addition of tiers to the campaign.
+     * It checks that the tiers are added successfully and the tier count is updated.
+     */
+    function test_addTier() public DeployCrowdFundingContract(user1) {
+        vm.startPrank(user1);
+
+        // Create a new Tier instances
+        crowdFundingContract.addTier({_name: "Basic", _amount: 10 wei});
+        crowdFundingContract.addTier({_name: "Standard", _amount: 20 wei});
+        crowdFundingContract.addTier({_name: "Pro", _amount: 25 wei});
+
+        vm.stopPrank();
+
+        // Check updated tier count
+        assertEq(crowdFundingContract.getTierCount(), 3);
+    }
+
+    /**
+     * @notice This function tests that the tier amount must be greater than zero.
+     * It checks that adding a tier with zero amount reverts with the correct error message.
+     */
+    function test_tierAmountMustBeGreaterThanZero() public DeployCrowdFundingContract(user1) {
+        vm.startPrank(user1);
+
+        // Expect revert due to tier amount must be greater than zero
+        vm.expectRevert(CrowdFunding.CrowdFunding__TierAmountMustBeGreaterThanZero.selector);
+        crowdFundingContract.addTier({_name: "Free", _amount: 0 wei});
+
+        vm.stopPrank();
+    }
+
+    /**
+     * @notice This function tests that only the owner can add a tier.
+     * It checks that a non-owner cannot add a tier and reverts with the correct error message.
+     */
+    function test_OnlyOwnerCanAddTier() public DeployCrowdFundingContract(user1) {
+        // User2 tries to add a tier
+        vm.startPrank(user2);
+
+        // Expect revert due to only owner can add tier
+        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, user2));
+        crowdFundingContract.addTier({_name: "Basic", _amount: 10 wei});
+
+        vm.stopPrank();
+    }
+
+    /**
+     * @notice This function tests the retrieval of tier information.
+     * It checks that the tier information is returned correctly after funding.
+     */
+    function test_getTierInfo() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // Check the tier information
+        CrowdFunding.Tier memory tier = crowdFundingContract.getFundingTierInfo(0); // 0 -> Basic tier
+
+        assertEq(tier.name, "Basic");
+        assertEq(tier.amount, 10 wei);
+        assertEq(tier.backers, 0); // No backers yet
+
+        // fund the Basic tier
+        vm.startPrank(user2);
+        crowdFundingContract.fund{value: 10 wei}(0);
+        vm.stopPrank();
+
+        // Check the updated tier information
+        tier = crowdFundingContract.getFundingTierInfo(0); // 0 -> Basic tier
+        assertEq(tier.backers, 1); // One backer now
+    }
+
+    /**
+     * @notice This function tests that an invalid tier index reverts with the correct error message.
+     * It checks that trying to access a non-existent tier index reverts.
+     */
+    function test_InvalidTierIndexInTierInfo() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // Check the tier information
+        vm.expectRevert(CrowdFunding.CrowdFunding__InvalidTierIndex.selector);
+        crowdFundingContract.getFundingTierInfo(100); // Invalid index
+    }
 }

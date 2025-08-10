@@ -264,6 +264,13 @@ contract CrowdFunding is Ownable {
     }
 
     /**
+     * @notice This function allows users to view the total number of funding tiers.
+     */
+    function getTierCount() external view returns (uint256) {
+        return tiers.length;
+    }
+
+    /**
      * @notice This function allows users to view the total contribution made by a specific backer.
      * @param _backer The address of the backer.
      */
