@@ -5,7 +5,6 @@ import {Test, console2} from "forge-std/Test.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 import {CrowdFundingFactory} from "../../src/CrowdFundingFactory.sol";
-import {CrowdFunding} from "../../src/CrowdFunding.sol";
 import {DeployCrowdFundingFactory} from "../../script/DeployCrowdFundingFactory.s.sol";
 
 contract CrowdFundingFactoryTest is Test {
@@ -14,9 +13,6 @@ contract CrowdFundingFactoryTest is Test {
     // Instance of the CrowdFundingFactory contract
     CrowdFundingFactory factory;
     address public factoryContractOwner;
-
-    // Instance of the CrowdFunding contract for testing
-    CrowdFunding crowdFundingContract;
 
     // User addresses for testing
     address public user1 = makeAddr("user1");
@@ -131,5 +127,31 @@ contract CrowdFundingFactoryTest is Test {
         // Get the campaign details
         uint256 campaignCountAfter = factory.getCampaignCount();
         assertEq(campaignCountAfter, 1);
+    }
+
+    /**
+     * @notice Test the details of a deployed campaign that belongs to a deployer has updated correctly
+     */
+    function test_IsDeployedContactDetailsAreCorrect() public DeployCrowdFundingContractViaFactory(user1) {
+        // Get the deployed campaign details
+        CrowdFundingFactory.Campaign[] memory userCampaigns = factory.getUserCampaigns(user1);
+
+        assertEq(userCampaigns.length, 1);
+        assertEq(userCampaigns[0].owner, user1);
+        assertEq(userCampaigns[0].campaignName, "Test Campaign");
+        assertEq(userCampaigns[0].createdAt, block.timestamp);
+    }
+
+    /**
+     * @notice Test the campaign array has been updated after deploying a new campaign
+     */
+    function test_CampaignArrayHasUpdated() public DeployCrowdFundingContractViaFactory(user1) {
+        // Get the deployed campaign details
+        CrowdFundingFactory.Campaign[] memory allCampaigns = factory.getAllCampaigns();
+
+        assertEq(allCampaigns.length, 1);
+        assertEq(allCampaigns[0].owner, user1);
+        assertEq(allCampaigns[0].campaignName, "Test Campaign");
+        assertEq(allCampaigns[0].createdAt, block.timestamp);
     }
 }
