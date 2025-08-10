@@ -89,4 +89,11 @@ contract CrowdFundingFactory is Ownable {
     function getUserCampaigns(address _user) external view returns (Campaign[] memory) {
         return userCampaigns[_user];
     }
+
+    /**
+     * @dev Returns the total number of campaigns.
+     */
+    function getCampaignCount() external view returns (uint256) {
+        return campaigns.length;
+    }
 }
