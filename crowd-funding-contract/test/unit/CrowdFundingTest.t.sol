@@ -275,6 +275,13 @@ contract CrowdFundingTest is Test {
         vm.expectRevert(CrowdFunding.CrowdFunding__CampaignGoalNotMetYet.selector);
         crowdFundingContract.withdraw();
 
+        // Check the campaign status
+        // 2 -> Failed (Enum)
+        assertEq(2, uint256(crowdFundingContract.getCampaignStatus()));
+
+        // Check that the campaign balance is greater than zero
+        assert(crowdFundingContract.getCampaignBalance() > 0);
+
         vm.stopPrank();
     }
 }
