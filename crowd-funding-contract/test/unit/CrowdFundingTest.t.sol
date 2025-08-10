@@ -18,6 +18,7 @@ contract CrowdFundingTest is Test {
     // --------------------- Events ---------------------
     event CampaignFunded(address indexed donor, uint256 amount);
     event CampaignWithdrawn(address indexed owner, uint256 amount);
+    event CampaignRefunded(address indexed backer, uint256 amount);
 
     function setUp() public {
         // Set initial balances for users
@@ -557,6 +558,27 @@ contract CrowdFundingTest is Test {
 
         // Expect revert due to no contribution made
         vm.expectRevert(CrowdFunding.CrowdFunding__NoContributionMade.selector);
+        crowdFundingContract.refund();
+
+        vm.stopPrank();
+    }
+
+    /**
+     * @notice This function tests that the CampaignRefunded event is emitted when a user successfully refunds.
+     */
+    function test_RefundEmitEvent() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // User2 funds the campaign
+        vm.startPrank(user2);
+        crowdFundingContract.fund{value: 25 wei}(2); // 2 -> Pro tier
+
+        // Fast forward time to after the campaign deadline
+        vm.warp(block.timestamp + 2 days + 1);
+
+        // Expect the CampaignRefunded event to be emitted
+        vm.expectEmit(true, false, false, true);
+        emit CampaignRefunded(user2, 25 wei);
+
+        // User2 tries to refund
         crowdFundingContract.refund();
 
         vm.stopPrank();

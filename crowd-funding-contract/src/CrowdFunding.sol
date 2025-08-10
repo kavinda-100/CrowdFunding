@@ -23,6 +23,7 @@ contract CrowdFunding is Ownable {
     // --------------------- Events ---------------------
     event CampaignFunded(address indexed donor, uint256 amount);
     event CampaignWithdrawn(address indexed owner, uint256 amount);
+    event CampaignRefunded(address indexed backer, uint256 amount);
 
     // --------------------- State Variables ---------------------
     string private campaignName; // Name of the crowdfunding campaign
@@ -203,6 +204,8 @@ contract CrowdFunding is Ownable {
         if (!success) {
             revert CrowdFunding__TransferFailed();
         }
+
+        emit CampaignRefunded(msg.sender, amountToRefund);
     }
 
     /**
