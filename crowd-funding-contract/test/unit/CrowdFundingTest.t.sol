@@ -524,6 +524,41 @@ contract CrowdFundingTest is Test {
         // Check that the user2 balance is restored
         assertEq(user2.balance, usersInitialBalance);
 
+        // check that the user's total contribution is reset
+        assertEq(crowdFundingContract.getBackerAmount(user2), 0);
+
+        vm.stopPrank();
+    }
+
+    /**
+     * @notice This function tests that users cannot refund their contributions while the campaign is active.
+     */
+    function test_CanNotRefundIfCampaignIsActive() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // User2 funds the campaign
+        vm.startPrank(user2);
+        crowdFundingContract.fund{value: 25 wei}(2); // 2 -> Pro tier
+
+        // User2 tries to refund while the campaign is active
+        vm.expectRevert(CrowdFunding.CrowdFunding__CampaignRefundNotAllowed.selector);
+        crowdFundingContract.refund();
+
+        vm.stopPrank();
+    }
+
+    /**
+     * @notice This function tests that users cannot refund their contributions if they have not contributed.
+     */
+    function test_CanNotRefundIfContributionIsZero() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // User2 tries to refund without contributing
+        vm.startPrank(user2);
+
+        // pass the deadline
+        vm.warp(block.timestamp + 2 days + 1);
+
+        // Expect revert due to no contribution made
+        vm.expectRevert(CrowdFunding.CrowdFunding__NoContributionMade.selector);
+        crowdFundingContract.refund();
+
         vm.stopPrank();
     }
 }
