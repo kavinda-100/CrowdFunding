@@ -213,6 +213,10 @@ contract CrowdFunding is Ownable {
         pause = !pause; // Toggle the pause state
     }
 
+    /**
+     * @notice This function allows the owner to extend the campaign deadline.
+     * @param _additionalDays The number of additional days to extend the deadline.
+     */
     function extendCampaignDeadline(uint256 _additionalDays) external onlyOwner onlyActiveCampaign {
         // Extend the campaign deadline by the specified number of days
         campaignDeadline += _additionalDays * 1 days;

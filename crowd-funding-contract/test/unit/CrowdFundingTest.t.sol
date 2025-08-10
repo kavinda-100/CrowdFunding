@@ -448,4 +448,59 @@ contract CrowdFundingTest is Test {
 
         vm.stopPrank();
     }
+
+    // ------------------------------------------ Extend deadline test ------------------------------------------
+
+    /**
+     * @notice This function tests the extend deadline functionality of the campaign.
+     * It checks that the owner can extend the campaign deadline successfully.
+     */
+    function test_extendDeadline() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // Check initial deadline
+        uint256 initialDeadline = crowdFundingContract.getCampaignDeadline();
+        assertEq(initialDeadline, block.timestamp + 1 days);
+
+        // Owner extends the deadline
+        vm.startPrank(user1);
+        crowdFundingContract.extendCampaignDeadline(2); // Extend by 2 days (function converts 2 into 2 days)
+
+        // Check updated deadline
+        uint256 updatedDeadline = crowdFundingContract.getCampaignDeadline();
+        assertEq(updatedDeadline, initialDeadline + 2 days);
+
+        vm.stopPrank();
+    }
+
+    /**
+     * @notice This function tests that only the owner can extend the campaign deadline.
+     * It checks that a non-owner cannot extend the deadline and reverts with the correct error message.
+     */
+    function test_OnlyOwnerCanExtendDeadline() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // User2 tries to extend the deadline
+        vm.startPrank(user2);
+
+        // Expect revert due to only owner can extend deadline
+        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, user2));
+        crowdFundingContract.extendCampaignDeadline(2); // Extend by 2 days
+
+        vm.stopPrank();
+    }
+
+    /**
+     * @notice This function tests that the campaign deadline can only be extended when the campaign is active.
+     * It checks that trying to extend the deadline after the campaign has ended reverts with the correct error message.
+     */
+    function test_CanOnlyExtendWhenCampaignIsActive() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // Fast forward time to after the campaign deadline
+        vm.warp(block.timestamp + 2 days + 1);
+
+        // User1 tries to extend the deadline after the campaign has ended
+        vm.startPrank(user1);
+
+        // Expect revert due to campaign has ended
+        vm.expectRevert(CrowdFunding.CrowdFunding__CampaignHasEnded.selector);
+        crowdFundingContract.extendCampaignDeadline(2); // Extend by 2 days
+
+        vm.stopPrank();
+    }
 }
