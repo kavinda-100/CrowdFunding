@@ -214,4 +214,44 @@ contract CrowdFundingTest is Test {
 
         vm.stopPrank();
     }
+
+    // -------------------------------- Withdraw Function Test -------------------------------
+
+    /**
+     * @notice This function tests the withdrawal of funds from a campaign.
+     * It checks that the owner can withdraw the funds successfully and the campaign balance is zero after withdrawal.
+     */
+    function test_withdrawFunds() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // Debug: Check initial campaign state
+        console2.log("Initial campaign status:", uint256(crowdFundingContract.getCampaignStatus()));
+        console2.log("Campaign deadline:", crowdFundingContract.getCampaignDeadline());
+        console2.log("Current timestamp:", block.timestamp);
+        console2.log("Campaign goal:", crowdFundingContract.getCampaignGoal());
+
+        // User2 funds the campaign to reach exactly the goal
+        vm.startPrank(user2);
+        crowdFundingContract.fund{value: 25 wei}(2); // 2 -> Pro tier
+        crowdFundingContract.fund{value: 25 wei}(2); // 2 -> Pro tier
+        crowdFundingContract.fund{value: 25 wei}(2); // 2 -> Pro tier
+        crowdFundingContract.fund{value: 25 wei}(2); // 2 -> Pro tier
+        console2.log("contract balance", crowdFundingContract.getCampaignBalance()); // for debugging
+        vm.stopPrank();
+
+        console2.log("contract status", uint256(crowdFundingContract.getCampaignStatus())); // for debugging
+
+        // Owner (user1) withdraws the funds
+        vm.startPrank(user1);
+
+        // Expect the CampaignWithdrawn event to be emitted
+        vm.expectEmit(true, false, false, true);
+        emit CampaignWithdrawn(user1, 100 wei);
+
+        // Withdraw the funds
+        crowdFundingContract.withdraw();
+
+        // Check that the campaign balance is zero after withdrawal
+        assertEq(crowdFundingContract.getCampaignBalance(), 0 wei);
+
+        vm.stopPrank();
+    }
 }
