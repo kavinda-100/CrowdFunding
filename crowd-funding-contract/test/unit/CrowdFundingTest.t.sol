@@ -301,7 +301,7 @@ contract CrowdFundingTest is Test {
         vm.stopPrank();
     }
 
-    // ---------------------------------- Campaign Tiers Tests ---------------------------
+    // ---------------------------------- Campaign Tiers Tests (add Tier) ---------------------------
 
     /**
      * @notice This function tests the addition of tiers to the campaign.
@@ -380,5 +380,50 @@ contract CrowdFundingTest is Test {
         // Check the tier information
         vm.expectRevert(CrowdFunding.CrowdFunding__InvalidTierIndex.selector);
         crowdFundingContract.getFundingTierInfo(100); // Invalid index
+    }
+
+    // ---------------------------------- Campaign Tiers Tests (remove Tier) ---------------------------
+
+    /**
+     * @notice This function tests the removal of a tier from the campaign.
+     * It checks that the tier is removed successfully and the tier count is updated.
+     */
+    function test_removeTier() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        vm.startPrank(user1);
+
+        // Remove the first tier (Basic)
+        crowdFundingContract.removeTier(0);
+
+        vm.stopPrank();
+
+        // Check updated tier count
+        assertEq(crowdFundingContract.getTierCount(), 2);
+    }
+
+    /**
+     * @notice This function tests that only the owner can remove a tier.
+     * It checks that a non-owner cannot remove a tier and reverts with the correct error message.
+     */
+    function test_OnlyOwnerCanRemoveTier() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // User2 tries to remove a tier
+        vm.startPrank(user2);
+
+        // Expect revert due to only owner can remove tier
+        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, user2));
+        crowdFundingContract.removeTier(0); // 0 -> Basic tier
+
+        vm.stopPrank();
+    }
+
+    /**
+     * @notice This function tests that an invalid tier index reverts with the correct error message.
+     * It checks that trying to remove a non-existent tier index reverts.
+     */
+    function test_InvalidTierIndexInRemoveTier() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        vm.startPrank(user1);
+        // Check the tier information
+        vm.expectRevert(CrowdFunding.CrowdFunding__InvalidTierIndex.selector);
+        crowdFundingContract.removeTier(100); // Invalid index
+        vm.stopPrank();
     }
 }
