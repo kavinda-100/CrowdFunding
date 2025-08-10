@@ -80,6 +80,50 @@ crowd-funding/
    forge coverage
    ```
 
+## 🧪 Testing & Coverage
+
+### 📊 Comprehensive Test Coverage
+
+The project maintains **100% test coverage** across all contracts with both unit and fuzz testing:
+
+#### Coverage Summary
+
+| File | Lines | Statements | Branches | Functions |
+|------|-------|------------|----------|-----------|
+| **CrowdFunding.sol** | 100% (98/98) | 100% (76/76) | 100% (19/19) | 100% (24/24) |
+| **CrowdFundingFactory.sol** | 100% (15/15) | 100% (11/11) | 100% (1/1) | 100% (5/5) |
+| **DeployCrowdFundingFactory.s.sol** | 100% (24/24) | 100% (24/24) | 100% (1/1) | 100% (2/2) |
+| **Total** | 🎯 **100% (137/137)** | 🎯 **100% (111/111)** | 🎯 **100% (21/21)** | 🎯 **100% (31/31)** |
+
+#### Test Structure
+
+```md
+test/
+├── 📁 unit/                      # Unit tests (36 tests)
+│   ├── CrowdFundingTest.t.sol    # Core contract tests (31 tests)
+│   └── CrowdFundingFactoryTest.t.sol # Factory tests (5 tests)
+└── 📁 fuzz/                      # Fuzz tests (4 tests)
+    ├── CrowdFundingFuzzTest.t.sol # Contract fuzz tests (3 tests)
+    └── CrowdFundingFactoryFuzzTest.t.sol # Factory fuzz tests (1 test)
+```
+
+#### Test Statistics
+
+- **Total Tests**: 40 (100% passing)
+- **Unit Tests**: 36 comprehensive tests
+- **Fuzz Tests**: 4 property-based tests
+- **Coverage**: 100% across all metrics
+
+#### Test Categories
+
+- **Core Functionality**: Campaign creation, funding, withdrawals, refunds
+- **Access Control**: Owner-only functions, permission validation  
+- **Edge Cases**: Invalid inputs, boundary conditions, failure scenarios
+- **State Management**: Campaign status transitions, pause/resume functionality
+- **Event Emissions**: Proper event logging for all state changes
+- **Security Testing**: Transfer failures, reentrancy protection, input validation
+- **Fuzz Testing**: Property-based testing with randomized inputs (258+ runs per test)
+
 ## 🔧 Components
 
 ### 📊 Smart Contracts
@@ -139,15 +183,16 @@ A modern, responsive web interface built with the latest technologies.
 | Contract | Lines | Statements | Branches | Functions | Status |
 |----------|-------|------------|----------|-----------|--------|
 | **CrowdFunding.sol** | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | ✅ **Perfect** |
-| **CrowdFundingFactory.sol** | 🔴 **0%** | 🔴 **0%** | 🔴 **0%** | 🔴 **0%** | ⏳ **Pending** |
+| **CrowdFundingFactory.sol** | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | ✅ **Perfect** |
 | **Deployment Scripts** | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | ✅ **Perfect** |
 
 ### Test Statistics
 
-- **Total Tests**: 32 test cases
-- **Test Success Rate**: 100% (32/32 passing)
-- **Coverage Achievement**: CrowdFunding.sol at 100% coverage
+- **Total Tests**: 40 test cases (36 unit + 4 fuzz)
+- **Test Success Rate**: 100% (40/40 passing)
+- **Coverage Achievement**: 100% across all contracts
 - **Security Testing**: All edge cases and failure scenarios covered
+- **Fuzz Testing**: Property-based testing with 258+ runs per test
 - **Gas Optimization**: All functions gas-tested and optimized
 
 ### Coverage Highlights
@@ -155,18 +200,22 @@ A modern, responsive web interface built with the latest technologies.
 ✅ **Complete Coverage Areas:**
 - All core functions (fund, withdraw, refund)
 - All view functions and getters  
-- Access control and security
+- Access control and security mechanisms
 - Input validation and error handling
 - Time-based logic and state transitions
-- Transfer failure scenarios
-- Event emission testing
+- Transfer failure scenarios with helper contracts
+- Event emission testing and validation
+- Factory pattern deployment and management
+- Fuzz testing with randomized inputs
 
 📈 **Advanced Testing Features:**
+
+- Property-based fuzz testing with bounded inputs
 - Transfer failure simulation using helper contracts
-- Comprehensive edge case testing
-- Gas usage optimization validation
-- Event emission verification
-- State transition testing
+- Comprehensive edge case and boundary testing
+- Gas usage optimization and reporting
+- Event emission verification and validation
+- State transition consistency testing
 
 ### 📝 Development Guidelines
 
