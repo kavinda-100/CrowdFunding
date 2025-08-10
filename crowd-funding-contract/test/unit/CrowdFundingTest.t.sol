@@ -104,4 +104,27 @@ contract CrowdFundingTest is Test {
 
         vm.stopPrank();
     }
+
+    /**
+     * @notice This function tests the funding of a campaign emit an event.
+     */
+    function test_fundCampaignEmitEvent() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // User1 funds the campaign
+        // 0 -> is the tier index
+        vm.startPrank(user1);
+
+        // Expect the CampaignFunded event to be emitted
+        vm.expectEmit(true, false, false, true);
+        emit CampaignFunded(user1, 10 wei);
+
+        // User1 funds the campaign
+        crowdFundingContract.fund{value: 10 wei}(0); // 0 -> Basic tier
+
+        // Check that the funding was successful
+        assertEq(crowdFundingContract.getFundingTierInfo(0).backers, 1);
+        assertEq(crowdFundingContract.getFundingTierInfo(0).amount, 10 wei);
+        assertEq(crowdFundingContract.getCampaignBalance(), 10 wei);
+
+        vm.stopPrank();
+    }
 }
