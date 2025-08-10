@@ -127,4 +127,18 @@ contract CrowdFundingTest is Test {
 
         vm.stopPrank();
     }
+
+    /**
+     * @notice This function tests the funding of a campaign with an invalid tier index.
+     */
+    function test_InvalidTierIndex() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // User1 tries to fund with an invalid tier index
+        vm.startPrank(user1);
+
+        // Expect revert due to invalid tier index
+        vm.expectRevert(CrowdFunding.CrowdFunding__InvalidTierIndex.selector);
+        crowdFundingContract.fund{value: 10 wei}(3); // 3 -> Invalid tier index
+
+        vm.stopPrank();
+    }
 }
