@@ -7,6 +7,8 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {CrowdFunding} from "../../src/CrowdFunding.sol";
 
 contract CrowdFundingTest is Test {
+    // -------------------------- State Variables --------------------------
+
     CrowdFunding crowdFundingContract;
 
     address public owner = makeAddr("owner");
@@ -20,6 +22,7 @@ contract CrowdFundingTest is Test {
     event CampaignWithdrawn(address indexed owner, uint256 amount);
     event CampaignRefunded(address indexed backer, uint256 amount);
 
+    // -------------------------- Setup Function --------------------------
     function setUp() public {
         // Set initial balances for users
         vm.deal(user1, usersInitialBalance);

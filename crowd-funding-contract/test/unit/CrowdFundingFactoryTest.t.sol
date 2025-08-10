@@ -5,20 +5,29 @@ import {Test, console2} from "forge-std/Test.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 import {CrowdFundingFactory} from "../../src/CrowdFundingFactory.sol";
+import {CrowdFunding} from "../../src/CrowdFunding.sol";
 import {DeployCrowdFundingFactory} from "../../script/DeployCrowdFundingFactory.s.sol";
 
 contract CrowdFundingFactoryTest is Test {
+    // -------------------------- State Variables --------------------------
+
+    // Instance of the CrowdFundingFactory contract
     CrowdFundingFactory factory;
     address public factoryContractOwner;
 
+    // Instance of the CrowdFunding contract for testing
+    CrowdFunding crowdFundingContract;
+
+    // User addresses for testing
     address public user1 = makeAddr("user1");
     address public user2 = makeAddr("user2");
-
+    // users initial balances
     uint256 public usersInitialBalance = 10 ether;
 
     // -------------------------- Events --------------------------
     event CampaignCreated(address indexed campaignAddress, address indexed owner, string campaignName);
 
+    // -------------------------- Setup Function --------------------------
     function setUp() public {
         DeployCrowdFundingFactory deployer = new DeployCrowdFundingFactory();
         factory = deployer.run();
@@ -27,6 +36,28 @@ contract CrowdFundingFactoryTest is Test {
         // set initial balances for users
         vm.deal(user1, usersInitialBalance);
         vm.deal(user2, usersInitialBalance);
+    }
+
+    // --------------------------- Modifier for tests ---------------------------
+
+    /**
+     * @param _owner The address of the owner of the campaign.
+     * @notice This modifier deploys a new CrowdFunding contract instance.
+     */
+    modifier DeployCrowdFundingContract(address _owner) {
+        vm.startPrank(_owner);
+
+        // Create a new CrowdFunding contract instance
+        crowdFundingContract = new CrowdFunding({
+            _name: "TestCampaign",
+            _description: "This is a test campaign for CrowdFunding",
+            _goal: 100 wei,
+            _deadline: 1,
+            _owner: _owner
+        });
+
+        vm.stopPrank();
+        _;
     }
 
     // -------------------------- Tests for deployment of CrowdFunding contract --------------------------
