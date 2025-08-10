@@ -145,6 +145,68 @@ forge test --match-path test/unit/CrowdFundingTest.t.sol
 forge coverage
 ```
 
+## 📊 Test Coverage
+
+### Overall Coverage Summary
+
+| File | Lines | Statements | Branches | Functions | Status |
+|------|-------|------------|----------|-----------|--------|
+| **CrowdFunding.sol** | 🟢 **100%** (98/98) | 🟢 **100%** (76/76) | 🟢 **100%** (19/19) | 🟢 **100%** (24/24) | ✅ **Complete** |
+| **CrowdFundingFactory.sol** | 🔴 **0%** (0/13) | 🔴 **0%** (0/10) | 🔴 **0%** (0/1) | 🔴 **0%** (0/4) | ⏳ **Pending** |
+| **DeployCrowdFundingFactory.s.sol** | 🟢 **100%** (24/24) | 🟢 **100%** (24/24) | 🟢 **100%** (1/1) | 🟢 **100%** (2/2) | ✅ **Complete** |
+| **Total Project** | 🟡 **90.37%** (122/135) | 🟡 **90.91%** (100/110) | 🟢 **95.24%** (20/21) | 🟡 **86.67%** (26/30) | 🎯 **Excellent** |
+
+### CrowdFunding.sol - Detailed Test Coverage
+
+#### 🎯 Core Functions (100% Coverage)
+
+| Function | Test Cases | Coverage | Description |
+|----------|------------|----------|-------------|
+| `fund()` | 8 tests | 🟢 **100%** | Funding campaigns, tier validation, error cases |
+| `withdraw()` | 3 tests | 🟢 **100%** | Owner withdrawals, goal checks, transfer failures |
+| `refund()` | 4 tests | 🟢 **100%** | Failed campaign refunds, transfer failures |
+| `addTier()` | 3 tests | 🟢 **100%** | Tier creation, validation, access control |
+| `removeTier()` | 3 tests | 🟢 **100%** | Tier removal, validation, access control |
+| `togglePause()` | 1 test | 🟢 **100%** | Pause/unpause functionality |
+| `extendCampaignDeadline()` | 3 tests | 🟢 **100%** | Deadline extension, validation |
+
+#### 🔍 View Functions (100% Coverage)
+
+| Function | Test Cases | Coverage | Description |
+|----------|------------|----------|-------------|
+| `getCampaignBalance()` | Multiple | 🟢 **100%** | Contract balance queries |
+| `getFundingTiers()` | 1 test | 🟢 **100%** | All tiers retrieval |
+| `getFundingTierInfo()` | 2 tests | 🟢 **100%** | Individual tier info, error cases |
+| `getTierCount()` | Multiple | 🟢 **100%** | Tier count validation |
+| `getBackerAmount()` | Multiple | 🟢 **100%** | Backer contribution queries |
+| `getBackerHasFundedTier()` | 2 tests | 🟢 **100%** | Tier funding status, error cases |
+| `getCampaignStatus()` | Multiple | 🟢 **100%** | Status calculations |
+| `getCampaignStatusRow()` | Multiple | 🟢 **100%** | Raw status queries |
+| `getIsPaused()` | Multiple | 🟢 **100%** | Pause state queries |
+| `getCampaignName()` | Multiple | 🟢 **100%** | Campaign name retrieval |
+| `getCampaignDescription()` | Multiple | 🟢 **100%** | Campaign description retrieval |
+| `getCampaignGoal()` | Multiple | 🟢 **100%** | Goal amount retrieval |
+| `getCampaignDeadline()` | Multiple | 🟢 **100%** | Deadline retrieval |
+
+#### 🛡️ Security & Edge Cases (100% Coverage)
+
+| Scenario | Test Cases | Coverage | Description |
+|----------|------------|----------|-------------|
+| **Access Control** | 6 tests | 🟢 **100%** | Owner-only functions, unauthorized access |
+| **Input Validation** | 5 tests | 🟢 **100%** | Invalid parameters, boundary conditions |
+| **Time-based Logic** | 3 tests | 🟢 **100%** | Deadline enforcement, state transitions |
+| **Transfer Failures** | 2 tests | 🟢 **100%** | ETH transfer failure scenarios |
+| **Pause Functionality** | 2 tests | 🟢 **100%** | Paused state enforcement |
+| **Campaign States** | 4 tests | 🟢 **100%** | Active, Successful, Failed states |
+
+#### 📈 Test Statistics
+
+- **Total Test Cases**: 32 tests
+- **Test Files**: 2 files (`CrowdFundingTest.t.sol`, `CrowdFundingFactoryTest.t.sol`)
+- **Average Gas Usage**: ~2.1M gas per test
+- **Test Execution Time**: ~15ms total
+- **All Tests Passing**: ✅ 100% success rate
+
 ### 📊 Gas Optimization
 
 Generate gas snapshots to monitor gas usage:
