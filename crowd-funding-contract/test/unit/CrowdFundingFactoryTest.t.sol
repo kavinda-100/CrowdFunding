@@ -44,7 +44,7 @@ contract CrowdFundingFactoryTest is Test {
      * @param _owner The address of the owner of the campaign.
      * @notice This modifier deploys a new CrowdFunding contract instance via the factory.
      */
-    modifier DeployCrowdFundingContract(address _owner) {
+    modifier DeployCrowdFundingContractViaFactory(address _owner) {
         // deploy a CrowdFunding contract
         vm.startPrank(_owner);
 
@@ -106,5 +106,30 @@ contract CrowdFundingFactoryTest is Test {
         });
 
         vm.stopPrank();
+    }
+
+    /**
+     * @notice Test the deployment of a CrowdFunding contract with a Invalid address
+     * and check for invalid address revert.
+     */
+    function test_ContactDeployWithInvalidAddress() public DeployCrowdFundingContractViaFactory(user1) {
+        // Check the number of campaigns
+        uint256 campaignCount = factory.getCampaignCount();
+        assertEq(campaignCount, 1);
+
+        // try with invalid address
+        vm.startPrank(address(0));
+        vm.expectRevert(CrowdFundingFactory.CrowdFundingFactory__InvalidAddress.selector);
+        factory.createCampaign({
+            _name: "Test Campaign",
+            _description: "This is a test campaign",
+            _goal: 100 wei,
+            _deadline: 1
+        });
+        vm.stopPrank();
+
+        // Get the campaign details
+        uint256 campaignCountAfter = factory.getCampaignCount();
+        assertEq(campaignCountAfter, 1);
     }
 }
