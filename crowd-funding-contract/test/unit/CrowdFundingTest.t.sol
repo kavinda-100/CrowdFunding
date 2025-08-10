@@ -583,4 +583,127 @@ contract CrowdFundingTest is Test {
 
         vm.stopPrank();
     }
+
+    // ---------------------------------- Additional Coverage Tests ----------------------------------
+
+    /**
+     * @notice This function tests the getFundingTiers function.
+     * It checks that all tiers are returned correctly.
+     */
+    function test_getFundingTiers() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // Get all funding tiers
+        CrowdFunding.Tier[] memory tiers = crowdFundingContract.getFundingTiers();
+
+        // Check that 3 tiers are returned
+        assertEq(tiers.length, 3);
+
+        // Check tier details
+        assertEq(tiers[0].name, "Basic");
+        assertEq(tiers[0].amount, 10 wei);
+        assertEq(tiers[0].backers, 0);
+
+        assertEq(tiers[1].name, "Standard");
+        assertEq(tiers[1].amount, 20 wei);
+        assertEq(tiers[1].backers, 0);
+
+        assertEq(tiers[2].name, "Pro");
+        assertEq(tiers[2].amount, 25 wei);
+        assertEq(tiers[2].backers, 0);
+    }
+
+    /**
+     * @notice This function tests the getBackerHasFundedTier function with invalid tier index.
+     * It checks that the function reverts with the correct error for invalid tier index.
+     */
+    function test_getBackerHasFundedTier_InvalidTierIndex()
+        public
+        DeployCrowdFundingContract(user1)
+        CreateAnTiers(user1)
+    {
+        // Try to check if user has funded an invalid tier index
+        vm.expectRevert(CrowdFunding.CrowdFunding__InvalidTierIndex.selector);
+        crowdFundingContract.getBackerHasFundedTier(user1, 100); // Invalid tier index
+    }
+
+    // ---------------------------------- Transfer Failed Tests ----------------------------------
+
+    /**
+     * @notice This function tests the withdraw function when transfer fails.
+     * We'll create a contract that cannot receive Ether to test the transfer failure.
+     */
+    function test_withdrawFunds_TransferFailed() public {
+        // Deploy a contract that cannot receive Ether as the owner
+        RejectEther rejectEtherContract = new RejectEther();
+
+        vm.startPrank(address(rejectEtherContract));
+
+        // Create crowdfunding contract with the RejectEther contract as owner
+        CrowdFunding campaignWithBadOwner = new CrowdFunding({
+            _name: "TestCampaign",
+            _description: "This is a test campaign for CrowdFunding",
+            _goal: 100 wei,
+            _deadline: 1,
+            _owner: address(rejectEtherContract)
+        });
+
+        // Add tiers
+        campaignWithBadOwner.addTier({_name: "Basic", _amount: 10 wei});
+        campaignWithBadOwner.addTier({_name: "Standard", _amount: 20 wei});
+        campaignWithBadOwner.addTier({_name: "Pro", _amount: 25 wei});
+
+        vm.stopPrank();
+
+        // Fund the campaign to reach the goal
+        vm.startPrank(user2);
+        campaignWithBadOwner.fund{value: 100 wei}(2); // Fund with 100 wei to reach goal
+        vm.stopPrank();
+
+        // Try to withdraw as the owner (RejectEther contract)
+        vm.startPrank(address(rejectEtherContract));
+
+        // Expect the transfer to fail
+        vm.expectRevert(CrowdFunding.CrowdFunding__TransferFailed.selector);
+        campaignWithBadOwner.withdraw();
+
+        vm.stopPrank();
+    }
+
+    /**
+     * @notice This function tests the refund function when transfer fails.
+     * We'll test by making the backer unable to receive Ether.
+     */
+    function test_refund_TransferFailed() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // Deploy a contract that cannot receive Ether
+        RejectEther rejectEtherContract = new RejectEther();
+
+        // Fund the campaign from the RejectEther contract
+        vm.deal(address(rejectEtherContract), 1000 wei);
+
+        // Use a low-level call to fund from the contract (since it can send but not receive)
+        vm.startPrank(address(rejectEtherContract));
+        (bool success,) = address(crowdFundingContract).call{value: 25 wei}(abi.encodeWithSignature("fund(uint256)", 2));
+        require(success, "Funding failed");
+        vm.stopPrank();
+
+        // Fast forward time to after the campaign deadline to make it failed
+        vm.warp(block.timestamp + 2 days + 1);
+
+        // Try to refund as the RejectEther contract
+        vm.startPrank(address(rejectEtherContract));
+
+        // Expect the refund transfer to fail
+        vm.expectRevert(CrowdFunding.CrowdFunding__TransferFailed.selector);
+        crowdFundingContract.refund();
+
+        vm.stopPrank();
+    }
+}
+
+/**
+ * @notice Helper contract that rejects all Ether transfers
+ * This is used to test transfer failure scenarios
+ */
+contract RejectEther {
+// This contract will reject all Ether transfers by not having a receive or fallback function
+// It can send Ether but cannot receive it
 }
