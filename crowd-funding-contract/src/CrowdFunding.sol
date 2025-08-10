@@ -286,6 +286,23 @@ contract CrowdFunding is Ownable {
     }
 
     /**
+     * @notice This function allows users to view the current status of the campaign.
+     * @dev It returns the status as it is without any modifications.
+     */
+    function getCampaignStatusRow() external view returns (CampaignStatus) {
+        return currentCampaignStatus;
+    }
+
+    /**
+     * @notice This function allows users to view the total contribution made by a specific backer.
+     * @param _backer The address of the backer.
+     */
+    function getBackerAmount(address _backer) external view returns (uint256) {
+        // Return the total contribution made by the backer
+        return backers[_backer].totalContribution;
+    }
+
+    /**
      * @notice This function allows users to view the campaign name.
      */
     function getCampaignName() external view returns (string memory) {
