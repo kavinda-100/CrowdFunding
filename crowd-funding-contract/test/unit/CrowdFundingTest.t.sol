@@ -20,8 +20,23 @@ contract CrowdFundingTest is Test {
         });
     }
 
-    function testFactoryDeployment() public view {
-        console2.log("CrowdFunding test");
-        console2.log("CrowdFunding deployed at:", address(crowdFundingContract));
+    // --------------------------- CrowdFunding contract creation tests ---------------------------
+
+    function test_createContract() public {
+        // create an instance of the CrowdFunding contract
+        CrowdFunding newCampaign = new CrowdFunding({
+            _name: "NewCampaign",
+            _description: "This is a new campaign",
+            _goal: 200 wei,
+            _deadline: 2,
+            _owner: owner
+        });
+
+        // check that the new campaign is created successfully
+        assertEq("NewCampaign", newCampaign.getCampaignName());
+        assertEq("This is a new campaign", newCampaign.getCampaignDescription());
+        assertEq(200 wei, newCampaign.getCampaignGoal());
+        assertEq(block.timestamp + (2 * 1 days), newCampaign.getCampaignDeadline());
+        assertEq(owner, newCampaign.owner());
     }
 }
