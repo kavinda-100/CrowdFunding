@@ -198,4 +198,20 @@ contract CrowdFundingTest is Test {
 
         vm.stopPrank();
     }
+
+    /**
+     * @notice This function tests the funding of a campaign while it is paused.
+     * @dev It checks that the transaction reverts with the correct error message.
+     */
+    function test_CanNotFundIfPaused() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // Pause the campaign
+        vm.startPrank(user1);
+        crowdFundingContract.togglePause();
+
+        // User1 tries to fund the campaign while it is paused
+        vm.expectRevert(CrowdFunding.CrowdFunding__CampaignHasPaused.selector);
+        crowdFundingContract.fund{value: 10 wei}(0); // 0 -> Basic tier
+
+        vm.stopPrank();
+    }
 }
