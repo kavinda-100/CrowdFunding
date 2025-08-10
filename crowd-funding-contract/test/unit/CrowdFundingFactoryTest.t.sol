@@ -42,18 +42,17 @@ contract CrowdFundingFactoryTest is Test {
 
     /**
      * @param _owner The address of the owner of the campaign.
-     * @notice This modifier deploys a new CrowdFunding contract instance.
+     * @notice This modifier deploys a new CrowdFunding contract instance via the factory.
      */
     modifier DeployCrowdFundingContract(address _owner) {
+        // deploy a CrowdFunding contract
         vm.startPrank(_owner);
 
-        // Create a new CrowdFunding contract instance
-        crowdFundingContract = new CrowdFunding({
-            _name: "TestCampaign",
-            _description: "This is a test campaign for CrowdFunding",
+        factory.createCampaign({
+            _name: "Test Campaign",
+            _description: "This is a test campaign",
             _goal: 100 wei,
-            _deadline: 1,
-            _owner: _owner
+            _deadline: 1
         });
 
         vm.stopPrank();
@@ -85,5 +84,27 @@ contract CrowdFundingFactoryTest is Test {
         // Check the number of campaigns
         campaignCount = factory.getCampaignCount();
         assertEq(campaignCount, 1);
+    }
+
+    /**
+     * @notice Test the deployment of a CrowdFunding contract via the factory contract
+     * emit an event.
+     */
+    function test_ContactDeployViaFactoryEmitAnEvent() public {
+        // deploy a CrowdFunding contract
+        vm.startPrank(user1);
+
+        // Expect the CampaignCreated event to be emitted
+        vm.expectEmit(false, false, false, true);
+        emit CampaignCreated(address(0), user1, "Test Campaign");
+
+        factory.createCampaign({
+            _name: "Test Campaign",
+            _description: "This is a test campaign",
+            _goal: 100 wei,
+            _deadline: 1
+        });
+
+        vm.stopPrank();
     }
 }
