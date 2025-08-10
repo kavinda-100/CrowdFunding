@@ -2,6 +2,7 @@
 pragma solidity ^0.8.24;
 
 import {Test, console2} from "forge-std/Test.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 import {CrowdFunding} from "../../src/CrowdFunding.sol";
 
@@ -281,6 +282,21 @@ contract CrowdFundingTest is Test {
 
         // Check that the campaign balance is greater than zero
         assert(crowdFundingContract.getCampaignBalance() > 0);
+
+        vm.stopPrank();
+    }
+
+    /**
+     * @notice This function tests that only the owner can withdraw funds from the campaign.
+     * It checks that a non-owner cannot withdraw funds and reverts with the correct error message.
+     */
+    function test_WithdrawCanOnlyCallByOwner() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // User2 tries to withdraw funds
+        vm.startPrank(user2);
+
+        // Expect revert due to only owner can withdraw
+        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, user2));
+        crowdFundingContract.withdraw();
 
         vm.stopPrank();
     }
