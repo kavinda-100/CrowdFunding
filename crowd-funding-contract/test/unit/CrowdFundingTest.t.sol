@@ -141,4 +141,20 @@ contract CrowdFundingTest is Test {
 
         vm.stopPrank();
     }
+
+    /**
+     * @notice This function tests the funding of a campaign with insufficient funds.
+     * It checks that the transaction reverts with the correct error message.
+     * 0 index is the Basic tier and it requires 10 wei to fund.
+     */
+    function test_InsufficientFunds() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // User1 tries to fund with insufficient funds
+        vm.startPrank(user1);
+
+        // Expect revert due to insufficient funds
+        vm.expectRevert(CrowdFunding.CrowdFunding__InsufficientFunds.selector);
+        crowdFundingContract.fund{value: 5 wei}(0); // 5 wei < 10 wei required for Basic tier
+
+        vm.stopPrank();
+    }
 }
