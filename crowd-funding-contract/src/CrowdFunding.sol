@@ -258,11 +258,20 @@ contract CrowdFunding is Ownable {
     }
 
     /**
+     * @notice This function allows users to view the total contribution made by a specific backer.
+     * @param _backer The address of the backer.
+     */
+    function getBackerAmount(address _backer) external view returns (uint256) {
+        // Return the total contribution made by the backer
+        return backers[_backer].totalContribution;
+    }
+
+    /**
      * @notice This function allows users to check if a specific backer has funded a particular tier.
      * @param _backer The address of the backer.
      * @param _tierIndex The index of the funding tier to check.
      */
-    function getHasFundedTier(address _backer, uint256 _tierIndex) external view returns (bool) {
+    function getBackerHasFundedTier(address _backer, uint256 _tierIndex) external view returns (bool) {
         // Check if the tier index is valid
         if (_tierIndex >= tiers.length) {
             revert CrowdFunding__InvalidTierIndex();
@@ -291,15 +300,6 @@ contract CrowdFunding is Ownable {
      */
     function getCampaignStatusRow() external view returns (CampaignStatus) {
         return currentCampaignStatus;
-    }
-
-    /**
-     * @notice This function allows users to view the total contribution made by a specific backer.
-     * @param _backer The address of the backer.
-     */
-    function getBackerAmount(address _backer) external view returns (uint256) {
-        // Return the total contribution made by the backer
-        return backers[_backer].totalContribution;
     }
 
     /**

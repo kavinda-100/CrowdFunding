@@ -158,4 +158,21 @@ contract CrowdFundingTest is Test {
 
         vm.stopPrank();
     }
+
+    /**
+     * @notice This function tests the funding of a campaign by a backer.
+     * It checks that the backer's details are updated correctly after funding.
+     */
+    function test_fundCampaign_BackerDetails() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // User1 funds the campaign
+        // 0 -> is the tier index
+        vm.startPrank(user1);
+        crowdFundingContract.fund{value: 10 wei}(0); // 0 -> Basic tier
+
+        // Check that the funding was successful
+        assertEq(crowdFundingContract.getBackerAmount(user1), 10 wei); // total contribution
+        assertTrue(crowdFundingContract.getBackerHasFundedTier(user1, 0)); // check if Basic tier is funded
+
+        vm.stopPrank();
+    }
 }
