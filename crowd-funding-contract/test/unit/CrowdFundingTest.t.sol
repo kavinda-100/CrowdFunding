@@ -254,4 +254,27 @@ contract CrowdFundingTest is Test {
 
         vm.stopPrank();
     }
+
+    /**
+     * @notice This function tests the withdrawal of funds from a campaign when the goal is not met.
+     * It checks that the user can withdraw their funds if the campaign goal is not met.
+     */
+    function test_withdrawFundIfGoalHasNotMet() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // Fund the campaign with less than the goal
+        vm.startPrank(user2);
+        crowdFundingContract.fund{value: 25 wei}(2); // 2 -> Pro tier
+        vm.stopPrank();
+
+        // Fast forward time to after the campaign deadline
+        vm.warp(block.timestamp + 2 days + 1);
+
+        // User1 tries to withdraw funds before the goal is met
+        vm.startPrank(user1);
+
+        // Expect revert due to campaign goal not met
+        vm.expectRevert(CrowdFunding.CrowdFunding__CampaignGoalNotMetYet.selector);
+        crowdFundingContract.withdraw();
+
+        vm.stopPrank();
+    }
 }
