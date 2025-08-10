@@ -505,4 +505,25 @@ contract CrowdFundingTest is Test {
     }
 
     // ----------------------------------  Refund tests --------------------------------------------------
+
+    /**
+     * @notice This function tests that users can refund their contributions after the campaign has failed.
+     * It checks that the user's balance is restored after a successful refund.
+     */
+    function test_refund() public DeployCrowdFundingContract(user1) CreateAnTiers(user1) {
+        // User2 funds the campaign
+        vm.startPrank(user2);
+        crowdFundingContract.fund{value: 25 wei}(2); // 2 -> Pro tier
+
+        // Fast forward time to after the campaign deadline
+        vm.warp(block.timestamp + 2 days + 1);
+
+        // User2 tries to refund
+        crowdFundingContract.refund();
+
+        // Check that the user2 balance is restored
+        assertEq(user2.balance, usersInitialBalance);
+
+        vm.stopPrank();
+    }
 }
