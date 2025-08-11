@@ -6,6 +6,7 @@ import { Geist } from "next/font/google";
 
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import WebThreeProvider from "@/providers/WebThreeProvider";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Crowd Funding",
@@ -35,7 +36,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <WebThreeProvider>
-            <main className="mx-auto flex min-h-screen max-w-[2000px] flex-col px-4">
+            <main className="mx-auto flex min-h-screen w-full max-w-[2000px] flex-col px-4">
+              <Header />
               {children}
             </main>
           </WebThreeProvider>
