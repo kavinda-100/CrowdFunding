@@ -50,28 +50,28 @@ const Footer = () => {
 
   const footerLinks = {
     platform: [
-      { label: "How it Works", href: "/how-it-works" },
-      { label: "Create Campaign", href: "/create" },
-      { label: "Browse Campaigns", href: "/campaigns" },
-      { label: "Success Stories", href: "/success-stories" },
+      { label: "How it Works", href: "#" },
+      { label: "Create Campaign", href: "#" },
+      { label: "Browse Campaigns", href: "#" },
+      { label: "Success Stories", href: "#" },
     ],
     company: [
       { label: "About Us", href: "/about" },
-      { label: "Our Team", href: "/team" },
-      { label: "Careers", href: "/careers" },
-      { label: "Press Kit", href: "/press" },
+      { label: "Our Team", href: "#" },
+      { label: "Careers", href: "#" },
+      { label: "Press Kit", href: "#" },
     ],
     resources: [
-      { label: "Documentation", href: "/docs" },
-      { label: "API Reference", href: "/api" },
-      { label: "Help Center", href: "/help" },
-      { label: "Community", href: "/community" },
+      { label: "Documentation", href: "#" },
+      { label: "API Reference", href: "#" },
+      { label: "Help Center", href: "#" },
+      { label: "Community", href: "#" },
     ],
     legal: [
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms of Service", href: "/terms" },
-      { label: "Cookie Policy", href: "/cookies" },
-      { label: "GDPR", href: "/gdpr" },
+      { label: "Privacy Policy", href: "#" },
+      { label: "Terms of Service", href: "#" },
+      { label: "Cookie Policy", href: "#" },
+      { label: "GDPR", href: "#" },
     ],
   };
 
@@ -83,12 +83,12 @@ const Footer = () => {
     },
     {
       icon: Twitter,
-      href: "https://twitter.com/your_twitter",
+      href: "#",
       label: "Twitter",
     },
     {
       icon: Mail,
-      href: "mailto:contact@crowdfund.com",
+      href: "#",
       label: "Email",
     },
   ];
