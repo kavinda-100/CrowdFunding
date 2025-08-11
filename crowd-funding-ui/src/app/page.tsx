@@ -1,3 +1,4 @@
+import AllCampaignSection from "@/sections/AllCampaignSection";
 import HeroSection from "@/sections/HeroSection";
 
 export default function HomePage() {
@@ -5,6 +6,8 @@ export default function HomePage() {
     <section className="flex size-full flex-col gap-5">
       {/* Hero section */}
       <HeroSection />
+      {/* Campaign section */}
+      <AllCampaignSection />
     </section>
   );
 }
