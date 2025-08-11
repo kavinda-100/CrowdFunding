@@ -1,9 +1,11 @@
 import "@/styles/globals.css";
+import "@rainbow-me/rainbowkit/styles.css";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import WebThreeProvider from "@/providers/WebThreeProvider";
 
 export const metadata: Metadata = {
   title: "Crowd Funding",
@@ -32,7 +34,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <WebThreeProvider>
+            <main className="mx-auto flex min-h-screen max-w-[2000px] flex-col px-4">
+              {children}
+            </main>
+          </WebThreeProvider>
         </ThemeProvider>
       </body>
     </html>
