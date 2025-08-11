@@ -123,3 +123,74 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom styles for RainbowKit ConnectButton */
+@layer components {
+  .custom-connect-button [data-rk] {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  /* Connect button styling */
+  .custom-connect-button button[data-rk] {
+    @apply bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 
+           border-0 rounded-lg px-4 py-2 text-white font-medium shadow-lg hover:shadow-xl 
+           transform hover:scale-105 transition-all duration-300 ease-in-out;
+  }
+
+  /* Connected account button styling */
+  .custom-connect-button div[data-rk] > button {
+    @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 
+           rounded-lg px-3 py-2 text-gray-900 dark:text-gray-100 font-medium 
+           shadow-md hover:shadow-lg transform hover:scale-105 
+           transition-all duration-300 ease-in-out hover:bg-gray-50 dark:hover:bg-gray-700;
+  }
+
+  /* Account modal styling */
+  .custom-connect-button [data-rk] [role="dialog"] {
+    @apply bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 
+           rounded-xl shadow-2xl backdrop-blur-md;
+  }
+
+  /* Modal button styling */
+  .custom-connect-button [data-rk] [role="dialog"] button {
+    @apply hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200;
+  }
+
+  /* Wallet option buttons */
+  .custom-connect-button [data-rk] [data-testid*="wallet-option"] {
+    @apply hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200 
+           border border-transparent hover:border-gray-200 dark:hover:border-gray-700;
+  }
+
+  /* Chain button styling */
+  .custom-connect-button [data-rk] [data-testid="chain-button"] {
+    @apply bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 
+           border border-orange-200 dark:border-orange-800 rounded-lg px-3 py-2 
+           hover:bg-orange-200 dark:hover:bg-orange-900/30 transition-all duration-200;
+  }
+}
+
+/* Custom scrollbar for webkit browsers */
+@layer utilities {
+  .scrollbar-custom {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(156 163 175) transparent;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: rgb(156 163 175);
+    border-radius: 3px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(107 114 128);
+  }
+}
