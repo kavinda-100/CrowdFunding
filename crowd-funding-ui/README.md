@@ -1,129 +1,29 @@
-# 🎨 CrowdFunding Frontend UI
+# Create T3 App
 
-<div align="center">
+This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Bun](https://img.shields.io/badge/Bun-%23000000.svg?style=for-the-badge&logo=bun&logoColor=white)
+## What's next? How do I make an app with this?
 
-**Modern Web3 Frontend Built with Next.js 15 & React 19**
+We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
 
-*Coming Soon!* 🚧
+If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
 
-</div>
+- [Next.js](https://nextjs.org)
+- [NextAuth.js](https://next-auth.js.org)
+- [Prisma](https://prisma.io)
+- [Drizzle](https://orm.drizzle.team)
+- [Tailwind CSS](https://tailwindcss.com)
+- [tRPC](https://trpc.io)
 
----
+## Learn More
 
-## 🚧 Development Status
+To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
 
-This frontend application is currently in the planning phase and will be developed after the smart contracts are fully tested and deployed.
+- [Documentation](https://create.t3.gg/)
+- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
 
-## 🎯 Planned Features
+You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
 
-### 🔗 Web3 Integration
-- **RainbowKit**: Modern wallet connection interface
-- **Wagmi**: React hooks for Ethereum
-- **Multi-wallet Support**: Support for 300+ wallets
-- **Network Management**: Automatic network detection & switching
-- **Transaction Management**: Real-time transaction status & signing
+## How do I deploy this?
 
-### 🎨 User Interface
-- **ShadCN UI**: High-quality, accessible components
-- **TailwindCSS**: Utility-first styling framework
-- **Responsive Design**: Mobile-first approach with modern layouts
-- **Dark/Light Mode**: System preference detection
-- **Accessibility**: WCAG 2.1 compliant interface
-- **Interactive Charts**: Campaign progress visualization
-
-### 📊 Campaign Management
-- **Campaign Discovery**: Browse and search campaigns
-- **Campaign Creation**: Easy campaign setup wizard
-- **Fund Management**: Simple funding process
-- **Progress Tracking**: Real-time campaign statistics
-
-### 🛠️ Developer Features
-- **TypeScript**: Type-safe development
-- **Component Library**: Reusable UI components
-- **State Management**: Efficient data handling
-- **Testing Suite**: Comprehensive test coverage
-
-## 🛠️ Technology Stack
-
-| Layer | Technology |
-|-------|------------|
-| **Framework** | Next.js 15 (App Router) |
-| **Frontend Library** | React 19 |
-| **Language** | TypeScript 5+ |
-| **Styling** | TailwindCSS 4.0 |
-| **UI Components** | ShadCN UI |
-| **Web3 Integration** | Wagmi v2 |
-| **Wallet Connection** | RainbowKit |
-| **State Management** | React Query |
-| **Runtime** | Bun.js |
-| **Deployment** | Vercel |
-
-## 📋 Development Roadmap
-
-### Phase 1: Foundation 🏗️
-
-- [ ] Project setup with Next.js 15 & React 19
-- [ ] TypeScript configuration & strict mode
-- [ ] TailwindCSS & ShadCN UI setup
-- [ ] Wagmi & RainbowKit integration
-- [ ] Bun.js development environment
-
-### Phase 2: Core Features 🎯
-
-- [ ] Campaign listing and filtering
-- [ ] Campaign detail pages
-- [ ] Funding functionality
-- [ ] Campaign creation wizard
-
-### Phase 3: Advanced Features ⚡
-
-- [ ] User dashboard
-- [ ] Campaign management tools
-- [ ] Real-time notifications
-- [ ] Advanced analytics
-
-### Phase 4: Polish & Deploy 🚀
-
-- [ ] Performance optimization
-- [ ] Mobile responsiveness
-- [ ] Accessibility improvements
-- [ ] Production deployment
-
-## 🚀 Getting Started (When Available)
-
-### Prerequisites
-
-- Bun.js 1.0+
-- Git
-- MetaMask or compatible Web3 wallet
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/kavinda-100/CrowdFunding.git
-cd CrowdFunding/crowd-funding-ui
-
-# Install dependencies
-bun install
-
-# Start development server
-bun dev
-
-# Build for production
-bun run build
-```
-
-## 📱 Preview Mockups
-
-- *UI mockups and designs will be added here during development*
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
+Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
