@@ -14,7 +14,8 @@ import {
   Rocket,
 } from "lucide-react";
 import { parseEther, parseGwei } from "viem";
-import { useWriteContract } from "wagmi";
+import { useWriteContract, useReadContract } from "wagmi";
+import { useQueryClient } from "@tanstack/react-query";
 import CrowdFundingFactoryAbi from "@/abi/CrowdFundingFactory.json";
 
 import {
@@ -80,6 +81,8 @@ const formSchema = z.object({
 
 const CreateContract = () => {
   const { data: hash, isPending, writeContract } = useWriteContract();
+  const { queryKey } = useReadContract();
+  const queryClient = useQueryClient();
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [modelOpen, setModelOpen] = React.useState(false);
@@ -136,12 +139,20 @@ const CreateContract = () => {
           setDialogOpen(false);
           setIsTxSuccess(true);
           setModelOpen(true);
+          // Invalidate all getUserCampaigns queries to refresh dashboard data
+          void queryClient.invalidateQueries({
+            queryKey: queryKey,
+          });
         },
         onError(error) {
           console.error("Error creating contract:", error);
           setDialogOpen(false);
           setErrorMessage(error.message ?? "Error creating contract");
           setModelOpen(true);
+        },
+        onSettled() {
+          // Reset form after submission
+          form.reset();
         },
       },
     );
