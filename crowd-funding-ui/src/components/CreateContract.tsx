@@ -32,6 +32,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useWriteContract } from "wagmi";
+import CrowdFundingFactoryAbi from "@/abi/CrowdFundingFactory.json";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -67,6 +69,13 @@ const formSchema = z.object({
 });
 
 const CreateContract = () => {
+  const { data: hash, isPending, error, writeContract } = useWriteContract();
+
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [modelOpen, setModelOpen] = React.useState(false);
+  const [isTxSuccess, setIsTxSuccess] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -74,7 +83,7 @@ const CreateContract = () => {
       name: "",
       description: "",
       goal: "1",
-      amountType: "ether",
+      amountType: "gwei",
       deadline: "1",
     },
   });
@@ -97,11 +106,44 @@ const CreateContract = () => {
     };
 
     console.log("Submission data:", submissionData);
+    // Call the writeContract function
+    writeContract(
+      {
+        address: process.env
+          .NEXT_PUBLIC_CROWDFUNDING_FACTORY_CONTRACT_ADDRESS as `0x${string}`,
+        abi: CrowdFundingFactoryAbi.abi,
+        functionName: "createCampaign",
+        args: [
+          values.name,
+          values.description,
+          submissionData.goal,
+          BigInt(values.deadline),
+        ],
+      },
+      {
+        onSuccess(data) {
+          console.log("Contract created successfully:", data);
+          setDialogOpen(false);
+          setIsTxSuccess(true);
+          setModelOpen(true);
+        },
+        onError(error) {
+          console.error("Error creating contract:", error);
+          setDialogOpen(false);
+          setErrorMessage(error.message ?? "Error creating contract");
+          setModelOpen(true);
+        },
+      },
+    );
   }
+
+  // for debugging
+  console.log("Write Contract Hook Data:", { hash, isPending, error });
 
   return (
     <div className="w-full">
-      <Dialog>
+      {/* Create Contract Dialog */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogTrigger className="flex w-full cursor-pointer items-center justify-center border p-4">
           <div className="flex items-center gap-4">
             <PlusIcon className="size-5 animate-bounce" />
@@ -226,11 +268,39 @@ const CreateContract = () => {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit">Create Campaign</Button>
+                  <Button type="submit">
+                    {isPending ? "Creating..." : "Create Campaign"}
+                  </Button>
                 </form>
               </Form>
             </div>
           </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
+      {/* Success and error Modal */}
+      <Dialog open={modelOpen} onOpenChange={setModelOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Transaction Status</DialogTitle>
+          </DialogHeader>
+          <div className="p-4">
+            {isTxSuccess ? (
+              <div>
+                Your campaign has been created successfully!
+                <p>Transaction Hash: {hash}</p>
+              </div>
+            ) : (
+              <p>{errorMessage ?? "An error occurred. Please try again."}</p>
+            )}
+          </div>
+          <Button
+            onClick={() => {
+              setModelOpen(false);
+            }}
+          >
+            Close
+          </Button>
         </DialogContent>
       </Dialog>
     </div>
