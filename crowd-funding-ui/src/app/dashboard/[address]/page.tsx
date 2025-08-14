@@ -62,7 +62,7 @@ const DashBoardPage = () => {
   // Function to truncate address
   const truncateAddress = (address: string | undefined) => {
     if (!address) return "N/A";
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+    return `${address.slice(0, 16)}...${address.slice(-4)}`;
   };
 
   const {
@@ -104,7 +104,7 @@ const DashBoardPage = () => {
 
   return (
     <section className="from-background to-background/80 min-h-screen bg-gradient-to-br p-6">
-      <div className="mx-auto max-w-7xl">
+      <div className="container mx-auto">
         {/* Header */}
         <div className="mb-8">
           <div className="mb-4 flex items-center gap-3">

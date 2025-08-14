@@ -154,10 +154,22 @@ const CreateContract = () => {
     <div className="w-full">
       {/* Create Contract Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogTrigger className="flex w-full cursor-pointer items-center justify-center border p-4">
-          <div className="flex items-center gap-4">
-            <PlusIcon className="size-5 animate-bounce" />
-            <span>Create a Contract</span>
+        <DialogTrigger className="group relative w-full overflow-hidden rounded-lg border-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 p-0 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">
+          <div className="absolute inset-0 bg-black/20" />
+          <div className="relative flex h-full w-full cursor-pointer items-center justify-center p-6 text-white">
+            <div className="flex flex-col items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
+                <PlusIcon className="h-6 w-6 animate-bounce" />
+              </div>
+              <div className="text-center">
+                <h3 className="text-lg font-bold">Create Campaign</h3>
+                <p className="text-sm text-white/90">Launch your project</p>
+              </div>
+            </div>
+            {/* Sparkle Effect */}
+            <div className="absolute top-4 right-4 opacity-50">
+              <Rocket className="h-5 w-5 text-white" />
+            </div>
           </div>
         </DialogTrigger>
         <DialogContent>
