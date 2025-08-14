@@ -12,6 +12,13 @@ import {
   Copy,
   ExternalLink,
   Rocket,
+  Type,
+  FileText,
+  Target,
+  Calendar,
+  DollarSign,
+  Coins,
+  Sparkles,
 } from "lucide-react";
 import { parseEther, parseGwei } from "viem";
 import { useWriteContract, useReadContract } from "wagmi";
@@ -45,6 +52,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -168,11 +176,11 @@ const CreateContract = () => {
         <DialogTrigger className="group relative w-full overflow-hidden rounded-lg border-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 p-0 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">
           <div className="absolute inset-0 bg-black/20" />
           <div className="relative flex h-full w-full cursor-pointer items-center justify-center p-6 text-white">
-            <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-col items-center justify-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
                 <PlusIcon className="h-6 w-6 animate-bounce" />
               </div>
-              <div className="text-center">
+              <div className="flex flex-col items-center justify-center text-center">
                 <h3 className="text-lg font-bold">Create Campaign</h3>
                 <p className="text-sm text-white/90">Launch your project</p>
               </div>
@@ -183,12 +191,20 @@ const CreateContract = () => {
             </div>
           </div>
         </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Create a new contract</DialogTitle>
-            <DialogDescription>
-              Please fill in the details below to create your contract.
-            </DialogDescription>
+        <DialogContent className="max-w-lg">
+          <DialogHeader className="space-y-4 text-center">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 shadow-lg">
+              <Sparkles className="h-8 w-8 text-white" />
+            </div>
+            <div>
+              <DialogTitle className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-2xl font-bold text-transparent">
+                Create New Campaign
+              </DialogTitle>
+              <DialogDescription className="text-muted-foreground mt-2">
+                Launch your crowdfunding project and turn your vision into
+                reality
+              </DialogDescription>
+            </div>
             <div>
               <Form {...form}>
                 <form
@@ -200,12 +216,25 @@ const CreateContract = () => {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel className="flex items-center gap-2 font-semibold">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-r from-blue-500 to-purple-500">
+                            <Type className="h-3 w-3 text-white" />
+                          </div>
+                          Campaign Name
+                        </FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter campaign name" {...field} />
+                          <div className="relative">
+                            <Input
+                              placeholder="Enter your campaign name (e.g., Save the Ocean)"
+                              className="border-2 pl-10 transition-colors focus:border-blue-400"
+                              {...field}
+                            />
+                            <Type className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                          </div>
                         </FormControl>
-                        <FormDescription>
-                          This is your public Campaign Name
+                        <FormDescription className="text-muted-foreground text-xs">
+                          Choose a compelling name that captures your
+                          project&apos;s essence
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -216,36 +245,55 @@ const CreateContract = () => {
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Description</FormLabel>
+                        <FormLabel className="flex items-center gap-2 font-semibold">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-r from-emerald-500 to-teal-500">
+                            <FileText className="h-3 w-3 text-white" />
+                          </div>
+                          Description
+                        </FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="Enter campaign description"
-                            {...field}
-                          />
+                          <div className="relative">
+                            <Textarea
+                              placeholder="Describe your campaign (e.g., Help us clean 100 beaches worldwide)"
+                              className="border-2 pl-10 transition-colors focus:border-emerald-400"
+                              {...field}
+                            />
+                            <FileText className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                          </div>
                         </FormControl>
-                        <FormDescription>
-                          This is your public Campaign Description
+                        <FormDescription className="text-muted-foreground text-xs">
+                          Explain what your campaign is about and why people
+                          should support it
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  <div className="flex w-full items-center justify-between gap-3">
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                     <FormField
                       control={form.control}
                       name="goal"
                       render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Goal</FormLabel>
+                        <FormItem className="md:col-span-2">
+                          <FormLabel className="flex items-center gap-2 font-semibold">
+                            <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-r from-yellow-500 to-orange-500">
+                              <Target className="h-3 w-3 text-white" />
+                            </div>
+                            Funding Goal
+                          </FormLabel>
                           <FormControl>
-                            <Input
-                              placeholder="Enter campaign goal"
-                              type="number"
-                              {...field}
-                            />
+                            <div className="relative">
+                              <Input
+                                placeholder="Enter amount (e.g., 10)"
+                                type="number"
+                                className="border-2 pl-10 transition-colors focus:border-yellow-400"
+                                {...field}
+                              />
+                              <DollarSign className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                            </div>
                           </FormControl>
-                          <FormDescription>
-                            This is your public Campaign Goal.
+                          <FormDescription className="text-muted-foreground text-xs">
+                            Set your funding target amount
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -255,24 +303,39 @@ const CreateContract = () => {
                       control={form.control}
                       name="amountType"
                       render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Amount Type</FormLabel>
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2 font-semibold">
+                            <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-r from-purple-500 to-pink-500">
+                              <Coins className="h-3 w-3 text-white" />
+                            </div>
+                            Currency
+                          </FormLabel>
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
                           >
                             <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select an amount type" />
+                              <SelectTrigger className="border-2 transition-colors focus:border-purple-400">
+                                <SelectValue placeholder="Currency" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="gwei">Gwei</SelectItem>
-                              <SelectItem value="ether">Ether</SelectItem>
+                              <SelectItem value="gwei">
+                                <div className="flex items-center gap-2">
+                                  <Coins className="h-4 w-4" />
+                                  Gwei
+                                </div>
+                              </SelectItem>
+                              <SelectItem value="ether">
+                                <div className="flex items-center gap-2">
+                                  <Coins className="h-4 w-4" />
+                                  Ether
+                                </div>
+                              </SelectItem>
                             </SelectContent>
                           </Select>
-                          <FormDescription>
-                            You can select the amount type.
+                          <FormDescription className="text-muted-foreground text-xs">
+                            Choose currency type
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -284,25 +347,52 @@ const CreateContract = () => {
                     name="deadline"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Deadline</FormLabel>
+                        <FormLabel className="flex items-center gap-2 font-semibold">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-r from-red-500 to-pink-500">
+                            <Calendar className="h-3 w-3 text-white" />
+                          </div>
+                          Campaign Duration
+                        </FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="Enter campaign deadline"
-                            type="number"
-                            {...field}
-                          />
+                          <div className="relative">
+                            <Input
+                              placeholder="Enter duration in days (e.g., 30)"
+                              type="number"
+                              className="border-2 pl-10 transition-colors focus:border-red-400"
+                              {...field}
+                            />
+                            <Calendar className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                          </div>
                         </FormControl>
-                        <FormDescription>
-                          This is your public Campaign Deadline (e.g.: enter 1
-                          for 1 day, 7 for 7 days)
+                        <FormDescription className="text-muted-foreground text-xs">
+                          How many days should your campaign run? (e.g., 1 = 1
+                          day, 30 = 30 days)
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  <Button type="submit">
-                    {isPending ? "Creating..." : "Create Campaign"}
-                  </Button>
+                  <div className="pt-4">
+                    <Button
+                      type="submit"
+                      disabled={isPending}
+                      className="w-full border-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:hover:scale-100"
+                    >
+                      <div className="flex items-center gap-2">
+                        {isPending ? (
+                          <>
+                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                            Creating Campaign...
+                          </>
+                        ) : (
+                          <>
+                            <Rocket className="h-4 w-4" />
+                            Launch Campaign
+                          </>
+                        )}
+                      </div>
+                    </Button>
+                  </div>
                 </form>
               </Form>
             </div>
