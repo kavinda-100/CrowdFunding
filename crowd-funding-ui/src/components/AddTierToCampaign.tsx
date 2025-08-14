@@ -22,6 +22,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -34,7 +35,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Coins, PlusIcon } from "lucide-react";
-import { useWriteContract } from "wagmi";
+import { useReadContract, useWriteContract } from "wagmi";
+import { useQueryClient } from "@tanstack/react-query";
 
 type AddTierToCampaignProps = {
   campaignAddress: string;
@@ -63,6 +65,14 @@ const formSchema = z.object({
 
 const AddTierToCampaign = (props: AddTierToCampaignProps) => {
   const { data: hash, isPending, writeContract } = useWriteContract();
+
+  const { queryKey } = useReadContract();
+  const queryClient = useQueryClient();
+
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [modelOpen, setModelOpen] = React.useState(false);
+  const [isTxSuccess, setIsTxSuccess] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -103,10 +113,21 @@ const AddTierToCampaign = (props: AddTierToCampaignProps) => {
       },
       {
         onSuccess(data) {
+          void queryClient.invalidateQueries({ queryKey });
           console.log("Tier added successfully:", data);
+          setDialogOpen(false);
+          setErrorMessage(null);
+          setIsTxSuccess(true);
+          setModelOpen(true);
         },
         onError(error) {
           console.error("Error adding tier:", error);
+          setIsTxSuccess(false);
+          setDialogOpen(false);
+          setModelOpen(true);
+          setErrorMessage(
+            error.message ?? "Failed to add tier. Please try again.",
+          );
         },
       },
     );
@@ -114,7 +135,8 @@ const AddTierToCampaign = (props: AddTierToCampaignProps) => {
 
   return (
     <div className="w-full">
-      <Dialog>
+      {/* Dialog for adding a new tier */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogTrigger className="flex w-full gap-4 border p-4">
           <PlusIcon className="size-5 animate-bounce" />
           Add Tier
@@ -212,6 +234,34 @@ const AddTierToCampaign = (props: AddTierToCampaignProps) => {
               </form>
             </Form>
           </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Success and Error modal */}
+      <Dialog open={modelOpen} onOpenChange={setModelOpen}>
+        <DialogContent>
+          {isTxSuccess ? (
+            <div className="p-4 text-center">
+              <h3 className="text-lg font-semibold">Success</h3>
+              <p>Your tier has been added successfully!</p>
+              <p>tx hash</p>
+              {hash && (
+                <p className="text-muted-foreground text-sm">
+                  {hash.slice(0, 15)}...{hash.slice(-4)}
+                </p>
+              )}
+            </div>
+          ) : (
+            <div className="text-center">
+              <h3 className="text-lg font-semibold">Error</h3>
+              <p>{errorMessage}</p>
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setModelOpen(false)}>
+              Close
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>

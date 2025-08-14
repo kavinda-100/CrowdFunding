@@ -15,6 +15,8 @@ const TierCard = (props: TierCardProps) => {
       <p className="text-sm text-gray-500">
         Goal: {formatGwei(BigInt(props.amount))} WEI
       </p>
+
+      {/* remove tier if the owner */}
     </div>
   );
 };

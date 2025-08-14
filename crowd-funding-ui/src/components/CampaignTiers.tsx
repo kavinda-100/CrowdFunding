@@ -31,11 +31,11 @@ const CampaignTiers = (props: CampaignTiersProps) => {
   console.log("CampaignTiers Error:", error, isError);
 
   return (
-    <section className="container mx-auto size-full w-full">
+    <section className="container mx-auto mb-10 flex size-full w-full flex-col gap-4">
       <h1>Campaign Tiers</h1>
       {isPending && <p>Loading...</p>}
       {!isPending && !isError && tiers.length > 0 ? (
-        <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {tiers.map((tier, index) => (
             <TierCard key={index} name={tier.name} amount={tier.amount} />
           ))}
