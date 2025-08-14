@@ -111,13 +111,35 @@ const CampaignDetails = (props: CampaignDetailsProps) => {
 
   const statusConfig = getStatusConfig(props.campaignStatus);
 
-  // Calculate days remaining
+  // Calculate time remaining with hours precision
   const now = new Date();
   const timeRemaining = deadlineDate.getTime() - now.getTime();
-  const daysRemaining = Math.max(
-    0,
-    Math.ceil(timeRemaining / (1000 * 60 * 60 * 24)),
+  const daysRemaining = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+  const hoursRemaining = Math.floor(
+    (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
   );
+  const minutesRemaining = Math.floor(
+    (timeRemaining % (1000 * 60 * 60)) / (1000 * 60),
+  );
+
+  // Format time remaining display
+  const getTimeRemainingText = () => {
+    if (timeRemaining <= 0) {
+      return "Campaign ended";
+    } else if (daysRemaining > 1) {
+      return `${daysRemaining} days left`;
+    } else if (daysRemaining === 1) {
+      return `1 day ${hoursRemaining}h left`;
+    } else if (hoursRemaining > 0) {
+      return `${hoursRemaining}h ${minutesRemaining}m left`;
+    } else if (minutesRemaining > 0) {
+      return `${minutesRemaining} minutes left`;
+    } else {
+      return "Less than 1 minute left";
+    }
+  };
+
+  const timeRemainingText = getTimeRemainingText();
 
   return (
     <div className="from-background to-background/80 min-h-screen bg-gradient-to-br p-6">
@@ -149,10 +171,10 @@ const CampaignDetails = (props: CampaignDetailsProps) => {
               {statusConfig.icon}
               <span className="ml-2 font-semibold">{props.campaignStatus}</span>
             </Badge>
-            {daysRemaining > 0 && props.campaignStatus === "Active" && (
+            {timeRemaining > 0 && props.campaignStatus === "Active" && (
               <Badge className="border-orange-200 bg-gradient-to-r from-orange-500/10 to-yellow-500/10 text-orange-700 dark:border-orange-800 dark:text-orange-300">
                 <Clock className="mr-1 h-3 w-3" />
-                {daysRemaining} days left
+                {timeRemainingText}
               </Badge>
             )}
           </div>
@@ -314,9 +336,7 @@ const CampaignDetails = (props: CampaignDetailsProps) => {
                         Time Remaining
                       </div>
                       <div className="text-sm text-green-600 dark:text-green-400">
-                        {daysRemaining > 0
-                          ? `${daysRemaining} days`
-                          : "Campaign ended"}
+                        {timeRemainingText}
                       </div>
                     </div>
                   </div>
