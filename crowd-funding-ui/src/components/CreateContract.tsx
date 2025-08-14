@@ -147,15 +147,14 @@ const CreateContract = () => {
         <DialogTrigger className="flex w-full cursor-pointer items-center justify-center border p-4">
           <div className="flex items-center gap-4">
             <PlusIcon className="size-5 animate-bounce" />
-            <span>create a contract</span>
+            <span>Create a Contract</span>
           </div>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogTitle>Create a new contract</DialogTitle>
             <DialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+              Please fill in the details below to create your contract.
             </DialogDescription>
             <div>
               <Form {...form}>
