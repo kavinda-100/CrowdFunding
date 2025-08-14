@@ -5,6 +5,7 @@ import { useReadContract } from "wagmi";
 import CrowdFundingContractAbi from "@/abi/CrowdFunding.json";
 import type { CampaignTierType } from "@/types";
 import AddTierToCampaign from "./AddTierToCampaign";
+import TierCard from "./TierCard";
 
 type CampaignTiersProps = {
   campaignAddress: string;
@@ -30,15 +31,15 @@ const CampaignTiers = (props: CampaignTiersProps) => {
   console.log("CampaignTiers Error:", error, isError);
 
   return (
-    <section className="size-full">
-      CampaignTiers
+    <section className="container mx-auto size-full w-full">
+      <h1>Campaign Tiers</h1>
       {isPending && <p>Loading...</p>}
       {!isPending && !isError && tiers.length > 0 ? (
-        <ul>
+        <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {tiers.map((tier, index) => (
-            <li key={index}>{tier.name}</li>
+            <TierCard key={index} name={tier.name} amount={tier.amount} />
           ))}
-        </ul>
+        </div>
       ) : (
         <p>No tiers available for this campaign.</p>
       )}
