@@ -69,3 +69,24 @@ export type CampaignType = {
    */
   createdAt: string;
 };
+
+/**
+ * Represents a tier within a crowdfunding campaign.
+ *
+ * @description This type maps the Solidity Tier struct to TypeScript for frontend usage.
+ * It contains information about a specific funding tier within a campaign.
+ *
+ * @example
+ * ```solidity
+ * struct Tier {
+ *      string name; // Name of the tier
+ *      uint256 amount; // Amount required to fund this tier
+ *      uint256 backers; // Number of backers for this tier
+ * }
+ *  ```
+ */
+export type CampaignTierType = {
+  name: string;
+  amount: number;
+  backers: number;
+};
