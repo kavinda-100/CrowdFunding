@@ -70,6 +70,7 @@ const AddTierToCampaign = (props: AddTierToCampaignProps) => {
     defaultValues: {
       name: "",
       amount: "",
+      amountType: "gwei", // Default to Gwei
     },
   });
 
