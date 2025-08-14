@@ -23,6 +23,7 @@ const CampaignTiers = (props: CampaignTiersProps) => {
   React.useEffect(() => {
     if (data) {
       console.log("Funding tiers:", data);
+      setTiers(data as CampaignTierType[]);
     }
   }, [data]);
 
@@ -31,6 +32,16 @@ const CampaignTiers = (props: CampaignTiersProps) => {
   return (
     <section className="size-full">
       CampaignTiers
+      {isPending && <p>Loading...</p>}
+      {!isPending && !isError && tiers.length > 0 ? (
+        <ul>
+          {tiers.map((tier, index) => (
+            <li key={index}>{tier.name}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>No tiers available for this campaign.</p>
+      )}
       <AddTierToCampaign campaignAddress={props.campaignAddress} />
     </section>
   );
