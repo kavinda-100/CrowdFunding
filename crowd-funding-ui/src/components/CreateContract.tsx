@@ -5,7 +5,14 @@ import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { PlusIcon } from "lucide-react";
+import {
+  PlusIcon,
+  CheckCircle,
+  XCircle,
+  Copy,
+  ExternalLink,
+  Rocket,
+} from "lucide-react";
 import { parseEther, parseGwei } from "viem";
 import { useWriteContract } from "wagmi";
 import CrowdFundingFactoryAbi from "@/abi/CrowdFundingFactory.json";
@@ -14,6 +21,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -71,7 +79,7 @@ const formSchema = z.object({
 });
 
 const CreateContract = () => {
-  const { data: hash, isPending, error, writeContract } = useWriteContract();
+  const { data: hash, isPending, writeContract } = useWriteContract();
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [modelOpen, setModelOpen] = React.useState(false);
@@ -281,27 +289,120 @@ const CreateContract = () => {
 
       {/* Success and error Modal */}
       <Dialog open={modelOpen} onOpenChange={setModelOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Transaction Status</DialogTitle>
+        <DialogContent className="max-w-md">
+          <DialogHeader className="space-y-4 text-center">
+            <div className="mx-auto">
+              {isTxSuccess ? (
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-emerald-500 shadow-lg">
+                  <CheckCircle className="h-8 w-8 text-white" />
+                </div>
+              ) : (
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-rose-500 shadow-lg">
+                  <XCircle className="h-8 w-8 text-white" />
+                </div>
+              )}
+            </div>
+            <DialogTitle className="text-xl font-semibold">
+              {isTxSuccess ? "Campaign Created!" : "Transaction Failed"}
+            </DialogTitle>
           </DialogHeader>
-          <div className="p-4">
+
+          <div className="space-y-4 py-4">
             {isTxSuccess ? (
-              <div>
-                Your campaign has been created successfully!
-                <p>Transaction Hash: {hash}</p>
+              <div className="space-y-4">
+                <div className="rounded-lg border border-green-200 bg-gradient-to-r from-green-50 to-emerald-50 p-4 dark:border-green-800 dark:from-green-950/50 dark:to-emerald-950/50">
+                  <div className="mb-3 flex items-center gap-3">
+                    <Rocket className="h-5 w-5 text-green-600 dark:text-green-400" />
+                    <p className="font-medium text-green-800 dark:text-green-200">
+                      Your campaign is now live on the blockchain!
+                    </p>
+                  </div>
+                  <p className="text-sm text-green-700 dark:text-green-300">
+                    Supporters can now discover and fund your project. Share
+                    your campaign to get started!
+                  </p>
+                </div>
+
+                {hash && (
+                  <div className="bg-muted/50 rounded-lg border p-4">
+                    <div className="mb-2 flex items-center justify-between">
+                      <p className="text-foreground text-sm font-medium">
+                        Transaction Hash:
+                      </p>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0"
+                          onClick={() => navigator.clipboard.writeText(hash)}
+                        >
+                          <Copy className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0"
+                          onClick={() =>
+                            window.open(
+                              `https://etherscan.io/tx/${hash}`,
+                              "_blank",
+                            )
+                          }
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground font-mono text-sm break-all">
+                      {hash}
+                    </p>
+                  </div>
+                )}
               </div>
             ) : (
-              <p>{errorMessage ?? "An error occurred. Please try again."}</p>
+              <div className="rounded-lg border border-red-200 bg-gradient-to-r from-red-50 to-rose-50 p-4 dark:border-red-800 dark:from-red-950/50 dark:to-rose-950/50">
+                <div className="flex items-start gap-3">
+                  <XCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-red-600 dark:text-red-400" />
+                  <div>
+                    <p className="mb-1 font-medium text-red-800 dark:text-red-200">
+                      Transaction Failed
+                    </p>
+                    <p className="text-sm text-red-700 dark:text-red-300">
+                      {errorMessage ??
+                        "An unexpected error occurred. Please check your wallet and try again."}
+                    </p>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
-          <Button
-            onClick={() => {
-              setModelOpen(false);
-            }}
-          >
-            Close
-          </Button>
+
+          <DialogFooter className="flex gap-3">
+            {isTxSuccess ? (
+              <>
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => setModelOpen(false)}
+                >
+                  Close
+                </Button>
+                <Button
+                  className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                  onClick={() => {
+                    setModelOpen(false);
+                  }}
+                >
+                  <Rocket className="mr-2 h-4 w-4" />
+                  View Campaign
+                </Button>
+              </>
+            ) : (
+              <Button className="w-full" onClick={() => setModelOpen(false)}>
+                Try Again
+              </Button>
+            )}
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
