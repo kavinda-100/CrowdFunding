@@ -98,6 +98,8 @@ const ContractDetailsPage = () => {
       ) : (
         <div>Loading...</div>
       )}
+
+      {/* Tier functionality */}
     </section>
   );
 };
