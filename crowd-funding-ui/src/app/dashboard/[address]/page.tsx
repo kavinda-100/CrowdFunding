@@ -175,7 +175,9 @@ const DashBoardPage = () => {
                   className={cn(
                     "group relative cursor-pointer overflow-hidden border-0 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl",
                     "bg-gradient-to-br",
-                    getGradient(index),
+                    getGradient(
+                      Math.floor(Math.random() * gradientColors.length),
+                    ),
                   )}
                 >
                   <div className="absolute inset-0 bg-black/20" />
