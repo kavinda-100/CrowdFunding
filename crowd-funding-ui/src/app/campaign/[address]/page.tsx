@@ -19,6 +19,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import CampaignTiers from "@/components/CampaignTiers";
 
 const ContractDetailsPage = () => {
   const { address } = useParams<{ address: string }>();
@@ -272,6 +273,7 @@ const ContractDetailsPage = () => {
       )}
 
       {/* Tier functionality */}
+      <CampaignTiers campaignAddress={address} />
     </section>
   );
 };
