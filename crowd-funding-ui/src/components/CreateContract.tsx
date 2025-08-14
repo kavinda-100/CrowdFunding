@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -5,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { PlusIcon } from "lucide-react";
 import { parseEther, parseGwei } from "viem";
+import { useWriteContract } from "wagmi";
+import CrowdFundingFactoryAbi from "@/abi/CrowdFundingFactory.json";
 
 import {
   Dialog,
@@ -32,8 +36,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useWriteContract } from "wagmi";
-import CrowdFundingFactoryAbi from "@/abi/CrowdFundingFactory.json";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -138,7 +140,7 @@ const CreateContract = () => {
   }
 
   // for debugging
-  console.log("Write Contract Hook Data:", { hash, isPending, error });
+  //   console.log("Write Contract Hook Data:", { hash, isPending, error });
 
   return (
     <div className="w-full">
