@@ -2,6 +2,7 @@
 
 import React from "react";
 import { formatGwei } from "viem";
+import { Button } from "./ui/button";
 
 type TierCardProps = {
   name: string;
@@ -15,6 +16,8 @@ const TierCard = (props: TierCardProps) => {
       <p className="text-sm text-gray-500">
         Goal: {formatGwei(BigInt(props.amount))} WEI
       </p>
+      {/* fund button */}
+      <Button>Fund Tier</Button>
 
       {/* remove tier if the owner */}
     </div>
