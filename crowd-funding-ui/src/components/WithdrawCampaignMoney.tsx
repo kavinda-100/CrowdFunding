@@ -1,7 +1,13 @@
 "use client";
 
 import React from "react";
-import { useReadContract, useWriteContract } from "wagmi";
+import {
+  useAccount,
+  useBalance,
+  useReadContract,
+  useWriteContract,
+} from "wagmi";
+import { formatEther, formatGwei } from "viem";
 import CrowdFundingContractAbi from "@/abi/CrowdFunding.json";
 import {
   Wallet,
@@ -43,6 +49,18 @@ type WithdrawCampaignMoneyProps = {
 };
 
 const WithdrawCampaignMoney = (props: WithdrawCampaignMoneyProps) => {
+  const { address } = useAccount();
+  const userAccountBalance = useBalance({ address: address, unit: "ether" });
+  const [ownerPreviousBalance, setOwnerPreviousBalance] =
+    React.useState<string>("0");
+  const [ownerNewBalance, setOwnerNewBalance] = React.useState<string>("0");
+
+  React.useEffect(() => {
+    if (userAccountBalance.data) {
+      setOwnerPreviousBalance(userAccountBalance.data.value.toString());
+    }
+  }, [userAccountBalance.data]);
+
   const [campaignStatus, setCampaignStatus] = React.useState<0 | 1 | 2>(0);
   const [withdrawConfirmationAlertOpen, setWithdrawConfirmationAlertOpen] =
     React.useState(false);
@@ -81,6 +99,23 @@ const WithdrawCampaignMoney = (props: WithdrawCampaignMoneyProps) => {
       console.error("Error fetching campaign status:", error);
     }
   }, [error, isError]);
+
+  // Refetch balance after successful withdrawal
+  React.useEffect(() => {
+    if (txSuccess && withdrawStatusModelOpen) {
+      const refetchBalance = async () => {
+        try {
+          await userAccountBalance.refetch();
+          if (userAccountBalance.data) {
+            setOwnerNewBalance(userAccountBalance.data.value.toString());
+          }
+        } catch (error) {
+          console.error("Error refetching balance:", error);
+        }
+      };
+      void refetchBalance();
+    }
+  }, [txSuccess, withdrawStatusModelOpen, userAccountBalance]);
 
   // Get readable status
   const getReadableStatus = (status: 0 | 1 | 2) => {
@@ -312,6 +347,85 @@ const WithdrawCampaignMoney = (props: WithdrawCampaignMoneyProps) => {
                   ? "Your funds have been successfully transferred to your wallet"
                   : txErrorMessage}
               </DialogDescription>
+
+              {/* Balance Comparison */}
+              {txSuccess && ownerNewBalance !== "0" && (
+                <div className="mt-6 rounded-lg border border-blue-200 bg-gradient-to-r from-blue-100 to-indigo-100 p-4 dark:border-blue-800 dark:from-blue-900/30 dark:to-indigo-900/30">
+                  <div className="mb-3 flex items-center gap-2 text-blue-700 dark:text-blue-300">
+                    <Wallet className="h-4 w-4" />
+                    <span className="text-sm font-medium">
+                      Wallet Balance Update
+                    </span>
+                  </div>
+
+                  <div className="space-y-3">
+                    {/* Previous Balance */}
+                    <div className="flex items-center justify-between rounded-lg bg-white p-3 dark:bg-gray-800">
+                      <div className="flex items-center gap-2">
+                        <div className="h-2 w-2 rounded-full bg-gray-400"></div>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                          Previous Balance
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-bold text-gray-900 dark:text-gray-100">
+                          {formatEther(BigInt(ownerPreviousBalance))} ETH
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">
+                          {formatGwei(BigInt(ownerPreviousBalance))} GWEI
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* New Balance */}
+                    <div className="flex items-center justify-between rounded-lg bg-emerald-50 p-3 dark:bg-emerald-900/20">
+                      <div className="flex items-center gap-2">
+                        <div className="h-2 w-2 rounded-full bg-emerald-500"></div>
+                        <span className="text-sm font-medium text-emerald-700 dark:text-emerald-300">
+                          New Balance
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-bold text-emerald-900 dark:text-emerald-100">
+                          {formatEther(BigInt(ownerNewBalance))} ETH
+                        </div>
+                        <div className="text-xs text-emerald-600 dark:text-emerald-400">
+                          {formatGwei(BigInt(ownerNewBalance))} GWEI
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Difference */}
+                    <div className="flex items-center justify-between rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 p-3 dark:from-green-900/20 dark:to-emerald-900/20">
+                      <div className="flex items-center gap-2">
+                        <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                        <span className="text-sm font-medium text-green-700 dark:text-green-300">
+                          Amount Received
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-bold text-green-900 dark:text-green-100">
+                          +
+                          {formatEther(
+                            BigInt(ownerNewBalance) -
+                              BigInt(ownerPreviousBalance),
+                          )}{" "}
+                          ETH
+                        </div>
+                        <div className="text-xs text-green-600 dark:text-green-400">
+                          +
+                          {formatGwei(
+                            BigInt(ownerNewBalance) -
+                              BigInt(ownerPreviousBalance),
+                          )}{" "}
+                          GWEI
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {writeDataHash && txSuccess && (
                 <div className="mt-6 rounded-lg border border-emerald-200 bg-gradient-to-r from-emerald-100 to-green-100 p-4 dark:border-emerald-800 dark:from-emerald-900/30 dark:to-green-900/30">
                   <div className="mb-2 flex items-center gap-2 text-emerald-700 dark:text-emerald-300">
