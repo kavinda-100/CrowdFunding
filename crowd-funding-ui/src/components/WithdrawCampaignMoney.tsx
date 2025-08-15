@@ -43,6 +43,7 @@ import {
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
+import { cn } from "@/lib/utils";
 
 type WithdrawCampaignMoneyProps = {
   campaignAddress: string;
@@ -244,12 +245,16 @@ const WithdrawCampaignMoney = (props: WithdrawCampaignMoneyProps) => {
       <div className="mb-6 text-center">
         <Button
           onClick={() => setWithdrawConfirmationAlertOpen(true)}
-          disabled={isWritePending}
-          className={`rounded-xl px-8 py-6 text-lg font-semibold transition-all duration-300 ${
-            campaignStatus === 1
-              ? "transform bg-gradient-to-r from-emerald-500 via-blue-600 to-purple-600 text-white shadow-lg hover:scale-105 hover:from-emerald-600 hover:via-blue-700 hover:to-purple-700 hover:shadow-xl"
-              : "cursor-not-allowed bg-gray-300 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
-          }`}
+          disabled={campaignStatus !== 1 || isWritePending}
+          className={cn(
+            "rounded-xl px-8 py-6 text-lg font-semibold transition-all duration-300",
+            {
+              "transform cursor-pointer bg-gradient-to-r from-emerald-500 via-blue-600 to-purple-600 text-white shadow-lg hover:scale-105 hover:from-emerald-600 hover:via-blue-700 hover:to-purple-700 hover:shadow-xl":
+                campaignStatus === 1,
+              "cursor-not-allowed bg-gray-300 text-gray-500 dark:bg-gray-700 dark:text-gray-400":
+                campaignStatus !== 1,
+            },
+          )}
         >
           <div className="flex items-center gap-3">
             {isWritePending ? (
