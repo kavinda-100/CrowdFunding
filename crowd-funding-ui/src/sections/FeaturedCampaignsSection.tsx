@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { useReadContract } from "wagmi";
+import { useAccount, useReadContract } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
 import {
   Calendar,
@@ -17,6 +18,9 @@ import {
   ArrowRight,
   Grid3X3,
   Zap,
+  Wallet,
+  Shield,
+  Lock,
 } from "lucide-react";
 import CrowdFundingFactoryAbi from "@/abi/CrowdFundingFactory.json";
 import type { CampaignType } from "@/types";
@@ -26,6 +30,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 const FeaturedCampaignsSection = () => {
+  const { isConnected } = useAccount();
   const [campaigns, setCampaigns] = React.useState<CampaignType[]>([]);
 
   // Array of beautiful gradient combinations
@@ -91,6 +96,211 @@ const FeaturedCampaignsSection = () => {
       console.error("Error fetching featured campaigns:", error);
     }
   }, [error, isError]);
+
+  // if not user connect their wallet
+  if (!isConnected) {
+    return (
+      <section className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900/20">
+        <div className="container mx-auto px-6 py-20">
+          {/* Animated Background Elements */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute -top-40 -right-40 h-80 w-80 animate-pulse rounded-full bg-gradient-to-br from-blue-400/20 to-purple-400/20 blur-3xl"></div>
+            <div className="absolute -bottom-40 -left-40 h-80 w-80 animate-pulse rounded-full bg-gradient-to-br from-purple-400/20 to-pink-400/20 blur-3xl delay-1000"></div>
+          </div>
+
+          {/* Main Content */}
+          <div className="relative z-10 flex min-h-[70vh] flex-col items-center justify-center text-center">
+            {/* Icon Section */}
+            <div className="mb-8 flex items-center justify-center gap-4">
+              <div className="relative">
+                <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 shadow-2xl">
+                  <Wallet className="h-10 w-10 text-white" />
+                </div>
+                <div className="absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 shadow-lg">
+                  <Lock className="h-4 w-4 text-white" />
+                </div>
+              </div>
+              <div className="hidden h-1 w-16 animate-pulse rounded-full bg-gradient-to-r from-blue-500 to-purple-500 sm:block"></div>
+              <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 shadow-2xl">
+                <Shield className="h-10 w-10 text-white" />
+              </div>
+            </div>
+
+            {/* Main Heading */}
+            <div className="mb-8 space-y-4">
+              <h1 className="text-4xl font-bold md:text-6xl">
+                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  Connect Your Wallet
+                </span>
+              </h1>
+              <div className="mx-auto h-1 w-32 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
+            </div>
+
+            {/* Description */}
+            <div className="mb-12 max-w-2xl space-y-6">
+              <p className="text-xl leading-relaxed text-gray-600 md:text-2xl dark:text-gray-300">
+                Unlock access to innovative crowdfunding campaigns and start
+                supporting creators who are changing the world.
+              </p>
+
+              {/* Feature Cards */}
+              <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+                <Card className="border-0 bg-gradient-to-br from-white to-blue-50 shadow-lg dark:from-gray-800 dark:to-blue-900/20">
+                  <CardContent className="p-4 text-center">
+                    <div className="mb-3 flex justify-center">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-blue-500 to-purple-600">
+                        <Target className="h-6 w-6 text-white" />
+                      </div>
+                    </div>
+                    <h3 className="mb-1 font-semibold text-gray-800 dark:text-gray-200">
+                      Discover Projects
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Explore innovative campaigns
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-0 bg-gradient-to-br from-white to-purple-50 shadow-lg dark:from-gray-800 dark:to-purple-900/20">
+                  <CardContent className="p-4 text-center">
+                    <div className="mb-3 flex justify-center">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-purple-500 to-pink-600">
+                        <Zap className="h-6 w-6 text-white" />
+                      </div>
+                    </div>
+                    <h3 className="mb-1 font-semibold text-gray-800 dark:text-gray-200">
+                      Support Creators
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Fund amazing ideas
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-0 bg-gradient-to-br from-white to-pink-50 shadow-lg dark:from-gray-800 dark:to-pink-900/20">
+                  <CardContent className="p-4 text-center">
+                    <div className="mb-3 flex justify-center">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-red-600">
+                        <Shield className="h-6 w-6 text-white" />
+                      </div>
+                    </div>
+                    <h3 className="mb-1 font-semibold text-gray-800 dark:text-gray-200">
+                      Secure Platform
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Blockchain-powered security
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* Connect Button */}
+            <div className="space-y-4">
+              <div className="group relative">
+                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 opacity-75 blur transition duration-300 group-hover:opacity-100"></div>
+                <div className="relative rounded-2xl bg-white p-1 dark:bg-gray-900">
+                  <ConnectButton.Custom>
+                    {({
+                      account,
+                      chain,
+                      openAccountModal,
+                      openChainModal,
+                      openConnectModal,
+                      mounted,
+                    }) => {
+                      const ready = mounted;
+                      const connected = ready && account && chain;
+
+                      return (
+                        <div
+                          {...(!ready && {
+                            "aria-hidden": true,
+                            style: {
+                              opacity: 0,
+                              pointerEvents: "none",
+                              userSelect: "none",
+                            },
+                          })}
+                        >
+                          {(() => {
+                            if (!connected) {
+                              return (
+                                <Button
+                                  onClick={openConnectModal}
+                                  size="lg"
+                                  className="rounded-xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 px-8 py-4 text-lg font-semibold text-white shadow-xl transition-all duration-300 hover:scale-105 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 hover:shadow-2xl"
+                                >
+                                  <Wallet className="mr-3 h-6 w-6" />
+                                  Connect Wallet to Continue
+                                  <Sparkles className="ml-3 h-6 w-6 animate-pulse" />
+                                </Button>
+                              );
+                            }
+
+                            return (
+                              <div style={{ display: "flex", gap: 12 }}>
+                                <Button onClick={openChainModal}>
+                                  {chain?.hasIcon && (
+                                    <div
+                                      style={{
+                                        background: chain.iconBackground,
+                                        width: 12,
+                                        height: 12,
+                                        borderRadius: 999,
+                                        overflow: "hidden",
+                                        marginRight: 4,
+                                      }}
+                                    >
+                                      {chain.iconUrl && (
+                                        <img
+                                          alt={chain.name ?? "Chain icon"}
+                                          src={chain.iconUrl}
+                                          style={{ width: 12, height: 12 }}
+                                        />
+                                      )}
+                                    </div>
+                                  )}
+                                  {chain?.name}
+                                </Button>
+
+                                <Button onClick={openAccountModal}>
+                                  {account?.displayName}
+                                  {account?.displayBalance
+                                    ? ` (${account.displayBalance})`
+                                    : ""}
+                                </Button>
+                              </div>
+                            );
+                          })()}
+                        </div>
+                      );
+                    }}
+                  </ConnectButton.Custom>
+                </div>
+              </div>
+
+              {/* Security Badge */}
+              <div className="flex items-center justify-center">
+                <Badge className="border-emerald-200 bg-gradient-to-r from-emerald-500/10 to-green-500/10 px-4 py-2 text-emerald-700 dark:border-emerald-800 dark:text-emerald-300">
+                  <Shield className="mr-2 h-4 w-4" />
+                  Secured by Web3 Technology
+                  <Sparkles className="ml-2 h-4 w-4" />
+                </Badge>
+              </div>
+            </div>
+
+            {/* Bottom Decorative Elements */}
+            <div className="mt-16 flex items-center justify-center gap-4 opacity-60">
+              <div className="h-2 w-2 animate-pulse rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
+              <div className="h-1 w-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"></div>
+              <div className="h-2 w-2 animate-pulse rounded-full bg-gradient-to-r from-pink-500 to-red-500 delay-500"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="px-6 py-20">
