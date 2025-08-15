@@ -148,12 +148,6 @@ const TierCard = (props: TierCardProps) => {
 
   // Remove the Tier handler
   const handleRemoveTier = async () => {
-    // if paused, show alert
-    if (isPaused) {
-      setIsPausedAlertOpen(true);
-      return;
-    }
-    // else proceed with funding the tier
     removeTierWriteContract(
       {
         address: props.campaignAddress as `0x${string}`,
