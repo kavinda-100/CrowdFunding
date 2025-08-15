@@ -142,7 +142,7 @@ const CampaignDetails = (props: CampaignDetailsProps) => {
   const timeRemainingText = getTimeRemainingText();
 
   return (
-    <div className="from-background to-background/80 min-h-screen bg-gradient-to-br p-6">
+    <div className="from-background to-background/80 bg-gradient-to-br p-6">
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-8">

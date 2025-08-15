@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 type TierCardProps = {
   name: string;
   amount: number;
+  isOwner: boolean;
 };
 
 const TierCard = (props: TierCardProps) => {
@@ -20,6 +21,7 @@ const TierCard = (props: TierCardProps) => {
       <Button>Fund Tier</Button>
 
       {/* remove tier if the owner */}
+      {props.isOwner && <Button variant="destructive">Remove Tier</Button>}
     </div>
   );
 };
