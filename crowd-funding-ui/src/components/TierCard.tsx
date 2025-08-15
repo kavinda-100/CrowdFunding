@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { formatEther } from "viem";
+import { formatEther, formatGwei } from "viem";
 import { Coins, Heart, Trash2, Crown, Target, Zap, Star } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
@@ -68,15 +68,18 @@ const TierCard = (props: TierCardProps) => {
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-2xl font-bold text-transparent">
             {amountInEth} ETH
           </div>
-          <div className="text-xs text-gray-500 dark:text-gray-400">
-            ≈ {props.amount} Wei
+          <div className="text-md text-gray-500 dark:text-gray-400">
+            ≈ {formatGwei(BigInt(props.amount))} WEI
           </div>
         </div>
 
         {/* Action Buttons */}
         <div className="space-y-3">
           {/* Fund Button */}
-          <Button className="group w-full rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:from-green-700 hover:to-emerald-700 hover:shadow-lg">
+          <Button
+            size={"lg"}
+            className="group w-full rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:from-green-700 hover:to-emerald-700 hover:shadow-lg"
+          >
             <div className="flex items-center justify-center space-x-2">
               <Heart className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
               <span>Fund This Tier</span>
@@ -88,6 +91,7 @@ const TierCard = (props: TierCardProps) => {
           {props.isOwner && (
             <Button
               variant="destructive"
+              size={"lg"}
               className="w-full bg-gradient-to-r from-red-500 to-pink-600 py-2 font-semibold transition-all duration-300 hover:from-red-600 hover:to-pink-700"
             >
               <div className="flex items-center justify-center space-x-2">
