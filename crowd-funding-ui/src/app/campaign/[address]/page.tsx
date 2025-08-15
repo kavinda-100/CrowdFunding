@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { use } from "react";
 import { useParams } from "next/navigation";
-import { useReadContracts } from "wagmi";
+import { useAccount, useReadContracts } from "wagmi";
 import {
   Loader2,
   AlertTriangle,
@@ -20,9 +20,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import CampaignTiers from "@/components/CampaignTiers";
+import PauseCampaign from "@/components/PauseCampaign";
 
 const ContractDetailsPage = () => {
   const { address } = useParams<{ address: string }>();
+  const { address: userAddress } = useAccount();
 
   const { data, error, isPending } = useReadContracts({
     contracts: [
@@ -62,6 +64,12 @@ const ContractDetailsPage = () => {
         functionName: "getCampaignBalance",
         args: [],
       },
+      {
+        address: address as `0x${string}`,
+        abi: CrowdFundingContractAbi.abi,
+        functionName: "owner",
+        args: [],
+      },
     ],
   });
 
@@ -72,6 +80,7 @@ const ContractDetailsPage = () => {
     campaignDeadline,
     campaignStatus,
     campaignBalance,
+    campaignOwner,
   ] = data ?? [];
 
   // debugging
@@ -274,6 +283,15 @@ const ContractDetailsPage = () => {
 
       {/* Tier functionality */}
       <CampaignTiers campaignAddress={address} />
+
+      {/* Pause Campaign Button (only visible to owner) */}
+      {campaignOwner?.result === userAddress && <PauseCampaign />}
+
+      {/* extend the deadline of the campaign (only visible to owner) */}
+      {/* campaignOwner?.result === userAddress && <ExtendCampaignDeadline /> */}
+
+      {/* Withdraw money from the campaign (only visible to owner) */}
+      {/* campaignOwner?.result === userAddress && <WithdrawCampaignMoney /> */}
     </section>
   );
 };
