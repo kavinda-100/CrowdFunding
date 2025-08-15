@@ -11,23 +11,25 @@ import {
   Zap,
   Star,
   Loader2Icon,
+  CheckCircle,
+  XCircle,
+  MapPin,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { useReadContracts, useWriteContract } from "wagmi";
 import { useQueryClient } from "@tanstack/react-query";
-import { parseEther } from "viem";
 import CrowdFundingContractAbi from "@/abi/CrowdFunding.json";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { is } from "zod/v4/locales";
 
 type TierCardProps = {
   name: string;
@@ -77,7 +79,7 @@ const TierCard = (props: TierCardProps) => {
         address: props.campaignAddress as `0x${string}`,
         abi: CrowdFundingContractAbi.abi,
         functionName: "fund",
-        value: parseEther(props.amount.toString()),
+        value: BigInt(props.amount),
         args: [props.tierIndex],
       },
       {
@@ -209,33 +211,132 @@ const TierCard = (props: TierCardProps) => {
 
       {/* Fund Tier Status modal */}
       <Dialog open={fundStatusModalOpen} onOpenChange={setFundStatusModalOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Fund Tier Status</DialogTitle>
-            <DialogDescription>Tier status</DialogDescription>
-          </DialogHeader>
-          <div>
-            {isFundTxSuccess ? (
-              <div>
-                <p>Your funding was successful!</p>
-                <p>Transaction Hash:</p>
+        <DialogContent className="border-0 shadow-2xl sm:max-w-[450px]">
+          {isFundTxSuccess ? (
+            <div className="rounded-lg bg-gradient-to-br from-white to-green-50 dark:from-gray-900 dark:to-green-900/20">
+              <DialogHeader className="pb-6 text-center">
+                <div className="mx-auto mb-4 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 p-4">
+                  <CheckCircle className="h-12 w-12 text-white" />
+                </div>
+                <DialogTitle className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-2xl font-bold text-transparent">
+                  Funding Successful! 🎉
+                </DialogTitle>
+                <DialogDescription className="text-lg text-gray-600 dark:text-gray-400">
+                  Your contribution to &ldquo;{props.name}&rdquo; tier has been
+                  processed successfully!
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="space-y-4 px-6">
+                {/* Funding Details */}
+                <div className="rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20">
+                  <div className="mb-3 flex items-center space-x-2 text-green-700 dark:text-green-400">
+                    <Heart className="h-5 w-5" />
+                    <span className="font-semibold">Funding Details</span>
+                  </div>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400">
+                        Tier:
+                      </span>
+                      <span className="font-medium text-gray-800 dark:text-gray-200">
+                        {props.name}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400">
+                        Amount:
+                      </span>
+                      <span className="font-medium text-gray-800 dark:text-gray-200">
+                        {amountInEth} ETH
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Transaction Hash */}
                 {fundTierHash && (
-                  <p>
-                    {fundTierHash.slice(0, 15)}...{fundTierHash.slice(-4)}
+                  <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900/20">
+                    <div className="mb-2 flex items-center space-x-2 text-blue-700 dark:text-blue-400">
+                      <MapPin className="h-4 w-4" />
+                      <span className="text-sm font-medium">
+                        Transaction Hash:
+                      </span>
+                    </div>
+                    <p className="rounded bg-blue-100 p-2 font-mono text-xs break-all text-blue-600 dark:bg-blue-900/30 dark:text-blue-300">
+                      {fundTierHash.slice(0, 15)}...{fundTierHash.slice(-4)}
+                    </p>
+                  </div>
+                )}
+
+                <div className="py-2 text-center text-sm text-gray-600 dark:text-gray-400">
+                  Thank you for supporting this campaign! 💝
+                </div>
+              </div>
+
+              <DialogFooter className="pt-6">
+                <Button
+                  onClick={() => setFundStatusModalOpen(false)}
+                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 font-semibold text-white hover:from-green-700 hover:to-emerald-700"
+                >
+                  <CheckCircle className="mr-2 h-4 w-4" />
+                  Amazing!
+                </Button>
+              </DialogFooter>
+            </div>
+          ) : (
+            <div className="rounded-lg bg-gradient-to-br from-white to-red-50 dark:from-gray-900 dark:to-red-900/20">
+              <DialogHeader className="pb-6 text-center">
+                <div className="mx-auto mb-4 rounded-full bg-gradient-to-r from-red-500 to-pink-600 p-4">
+                  <XCircle className="h-12 w-12 text-white" />
+                </div>
+                <DialogTitle className="bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-2xl font-bold text-transparent">
+                  Funding Failed
+                </DialogTitle>
+                <DialogDescription className="text-gray-600 dark:text-gray-400">
+                  Unfortunately, your funding attempt was unsuccessful.
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="space-y-4 px-6">
+                {/* Error Details */}
+                <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20">
+                  <div className="mb-2 flex items-center space-x-2 text-red-700 dark:text-red-400">
+                    <XCircle className="h-4 w-4" />
+                    <span className="font-medium">Error Details:</span>
+                  </div>
+                  <p className="rounded bg-red-100 p-3 text-sm text-red-600 dark:bg-red-900/30 dark:text-red-300">
+                    {fundErrorMessage ??
+                      "Transaction failed. Please check your wallet balance and try again."}
                   </p>
-                )}
+                </div>
+
+                <div className="text-center text-sm text-gray-600 dark:text-gray-400">
+                  Don&apos;t worry! You can try funding again. 🔄
+                </div>
               </div>
-            ) : (
-              <div>
-                <p>Your funding is unsuccessful.</p>
-                {fundErrorMessage ? (
-                  <p>Error: {fundErrorMessage}</p>
-                ) : (
-                  <p>Please try again later.</p>
-                )}
-              </div>
-            )}
-          </div>
+
+              <DialogFooter className="space-x-3 pt-6">
+                <Button
+                  variant="outline"
+                  onClick={() => setFundStatusModalOpen(false)}
+                  className="flex-1 border-2"
+                >
+                  Close
+                </Button>
+                <Button
+                  onClick={() => {
+                    setFundStatusModalOpen(false);
+                    void handleFundTier();
+                  }}
+                  className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+                >
+                  <Zap className="mr-2 h-4 w-4" />
+                  Try Again
+                </Button>
+              </DialogFooter>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
     </>
