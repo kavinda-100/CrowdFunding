@@ -115,10 +115,10 @@ const PauseCampaign = (props: PauseCampaignProps) => {
   };
 
   return (
-    <section className="w-full">
+    <section className="my-4 w-full">
       {/* Campaign Status Card */}
-      <Card className="w-full border-0 bg-gradient-to-br from-white to-blue-50 shadow-lg dark:from-gray-800 dark:to-gray-900">
-        <CardHeader className="pb-4">
+      <Card className="w-full rounded-none border-0 border-none bg-gradient-to-br from-white to-blue-50 shadow-none dark:from-gray-800 dark:to-gray-900">
+        <CardHeader className="container mx-auto pb-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div
@@ -167,7 +167,7 @@ const PauseCampaign = (props: PauseCampaignProps) => {
           </div>
         </CardHeader>
 
-        <CardContent className="space-y-4">
+        <CardContent className="container mx-auto space-y-4">
           {/* Status Description */}
           <div
             className={`rounded-lg border p-4 ${
