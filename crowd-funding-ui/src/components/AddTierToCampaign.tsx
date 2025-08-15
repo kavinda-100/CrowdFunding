@@ -44,7 +44,7 @@ import {
   Gift,
   DollarSign,
 } from "lucide-react";
-import { useReadContract, useWriteContract } from "wagmi";
+import { useReadContract, useReadContracts, useWriteContract } from "wagmi";
 import { useQueryClient } from "@tanstack/react-query";
 
 type AddTierToCampaignProps = {
@@ -76,6 +76,7 @@ const AddTierToCampaign = (props: AddTierToCampaignProps) => {
   const { data: hash, isPending, writeContract } = useWriteContract();
 
   const { queryKey } = useReadContract();
+  const { queryKey: queryKeyMultiple } = useReadContracts();
   const queryClient = useQueryClient();
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -123,6 +124,7 @@ const AddTierToCampaign = (props: AddTierToCampaignProps) => {
       {
         onSuccess(data) {
           void queryClient.invalidateQueries({ queryKey });
+          void queryClient.invalidateQueries({ queryKey: queryKeyMultiple });
           console.log("Tier added successfully:", data);
           setDialogOpen(false);
           setErrorMessage(null);
