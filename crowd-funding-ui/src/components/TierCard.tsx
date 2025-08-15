@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { useReadContracts, useWriteContract } from "wagmi";
+import { useReadContract, useReadContracts, useWriteContract } from "wagmi";
 import { useQueryClient } from "@tanstack/react-query";
 import CrowdFundingContractAbi from "@/abi/CrowdFunding.json";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,8 +28,17 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 type TierCardProps = {
   name: string;
@@ -45,6 +54,7 @@ const TierCard = (props: TierCardProps) => {
   const isHighValue = Number(amountInEth) >= 1;
 
   const { queryKey } = useReadContracts();
+  const { queryKey: tiersQueryKey } = useReadContract();
   const queryClient = useQueryClient();
 
   // Fund Tier states
@@ -65,12 +75,16 @@ const TierCard = (props: TierCardProps) => {
     isPending: isRemoveTierPending,
     writeContract: removeTierWriteContract,
   } = useWriteContract();
-  const [removeSStatusModelOpen, setRemoveStatusModelOpen] =
+  const [removeStatusModelOpen, setRemoveStatusModelOpen] =
     React.useState(false);
   const [isRemoveTxSuccess, setIsRemoveTxSuccess] = React.useState(false);
   const [removeErrorMessage, setRemoveErrorMessage] = React.useState<
     string | null
   >(null);
+
+  // remove tier confirmation state
+  const [isRemoveConfirmationDialogOpen, setIsRemoveConfirmationDialogOpen] =
+    React.useState(false);
 
   // fund the Tier handler
   const handleFundTier = async () => {
@@ -94,6 +108,32 @@ const TierCard = (props: TierCardProps) => {
           setFundErrorMessage(error.message ?? "Something went wrong");
           setIsFundTxSuccess(false);
           setFundStatusModalOpen(true);
+        },
+      },
+    );
+  };
+
+  // Remove the Tier handler
+  const handleRemoveTier = async () => {
+    removeTierWriteContract(
+      {
+        address: props.campaignAddress as `0x${string}`,
+        abi: CrowdFundingContractAbi.abi,
+        functionName: "removeTier",
+        args: [props.tierIndex],
+      },
+      {
+        onSuccess: () => {
+          setIsRemoveTxSuccess(true);
+          setRemoveStatusModelOpen(true);
+          setRemoveErrorMessage(null);
+          void queryClient.invalidateQueries({ queryKey: tiersQueryKey });
+        },
+        onError: (error) => {
+          console.error("Error removing tier:", error);
+          setRemoveErrorMessage(error.message ?? "Something went wrong");
+          setIsRemoveTxSuccess(false);
+          setRemoveStatusModelOpen(true);
         },
       },
     );
@@ -182,14 +222,23 @@ const TierCard = (props: TierCardProps) => {
             {/* Remove Button (Owner Only) */}
             {props.isOwner && (
               <Button
+                onClick={() => setIsRemoveConfirmationDialogOpen(true)}
                 variant="destructive"
                 size={"lg"}
                 className="w-full cursor-pointer bg-gradient-to-r from-red-500 to-pink-600 py-2 font-semibold transition-all duration-300 hover:from-red-600 hover:to-pink-700"
               >
-                <div className="flex items-center justify-center space-x-2">
-                  <Trash2 className="h-4 w-4" />
-                  <span>Remove Tier</span>
-                </div>
+                {isRemoveTierPending ? (
+                  <div className="flex items-center justify-center space-x-2">
+                    <Loader2Icon className="h-4 w-4 animate-spin" />
+                    <span>Removing Tier...</span>
+                    <Zap className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center space-x-2">
+                    <Trash2 className="h-4 w-4" />
+                    <span>Remove Tier</span>
+                  </div>
+                )}
               </Button>
             )}
           </div>
@@ -337,6 +386,70 @@ const TierCard = (props: TierCardProps) => {
               </DialogFooter>
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Remove Tier Confirmation */}
+      <AlertDialog
+        open={isRemoveConfirmationDialogOpen}
+        onOpenChange={setIsRemoveConfirmationDialogOpen}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently remove this
+              tier from the campaign.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => setIsRemoveConfirmationDialogOpen(false)}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                void handleRemoveTier();
+                setIsRemoveConfirmationDialogOpen(false);
+              }}
+            >
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Remove tier status model */}
+      <Dialog
+        open={removeStatusModelOpen}
+        onOpenChange={setRemoveStatusModelOpen}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Remove Tier Successfully</DialogTitle>
+            <DialogDescription>
+              Your tier has been successfully removed from the campaign.
+            </DialogDescription>
+          </DialogHeader>
+          <div>
+            {isRemoveTxSuccess ? (
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Your tier has been successfully removed from the campaign.
+                <span>Hash</span>
+                {removeTierHash && (
+                  <span>
+                    {removeTierHash.slice(0, 15)}...{removeTierHash.slice(-4)}
+                  </span>
+                )}
+              </p>
+            ) : (
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                {removeErrorMessage ??
+                  "There was an error removing your tier. Please try again later."}
+              </p>
+            )}
+          </div>
         </DialogContent>
       </Dialog>
     </>
