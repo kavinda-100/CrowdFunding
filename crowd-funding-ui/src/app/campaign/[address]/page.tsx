@@ -22,6 +22,7 @@ import Link from "next/link";
 import CampaignTiers from "@/components/CampaignTiers";
 import PauseCampaign from "@/components/PauseCampaign";
 import ExtendCampaignDeadline from "@/components/ExtendCampaignDeadline";
+import WithdrawCampaignMoney from "@/components/WithdrawCampaignMoney";
 
 const ContractDetailsPage = () => {
   const { address } = useParams<{ address: string }>();
@@ -296,7 +297,9 @@ const ContractDetailsPage = () => {
       )}
 
       {/* Withdraw money from the campaign (only visible to owner) */}
-      {/* campaignOwner?.result === userAddress && <WithdrawCampaignMoney /> */}
+      {campaignOwner?.result === userAddress && (
+        <WithdrawCampaignMoney campaignAddress={address} />
+      )}
     </section>
   );
 };
