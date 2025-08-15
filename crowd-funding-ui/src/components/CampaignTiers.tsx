@@ -140,9 +140,11 @@ const CampaignTiers = (props: CampaignTiersProps) => {
               {tiers.map((tier, index) => (
                 <TierCard
                   key={index}
+                  tierIndex={index}
                   name={tier.name}
                   amount={tier.amount}
                   isOwner={isOwner}
+                  campaignAddress={props.campaignAddress}
                 />
               ))}
             </div>
