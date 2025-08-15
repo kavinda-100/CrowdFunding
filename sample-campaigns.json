@@ -1,0 +1,62 @@
+[
+  {
+    "campaign-name": "Ocean Cleanup Initiative",
+    "campaign-description": "Help us clean 100 beaches worldwide and remove plastic waste from our oceans. Together we can make a difference for marine life and future generations.",
+    "campaign-goal": "50",
+    "campaign_deadline": "30"
+  },
+  {
+    "campaign-name": "School Technology Fund",
+    "campaign-description": "Provide laptops and tablets to underprivileged students in rural areas. Every child deserves access to modern educational technology.",
+    "campaign-goal": "25",
+    "campaign_deadline": "45"
+  },
+  {
+    "campaign-name": "Community Garden Project",
+    "campaign-description": "Transform empty lots into thriving community gardens where neighbors can grow fresh vegetables and build stronger communities together.",
+    "campaign-goal": "15",
+    "campaign_deadline": "20"
+  },
+  {
+    "campaign-name": "Animal Shelter Renovation",
+    "campaign-description": "Renovate our local animal shelter to provide better living conditions for rescued pets. Help us build new kennels, medical facilities, and play areas.",
+    "campaign-goal": "75",
+    "campaign_deadline": "60"
+  },
+  {
+    "campaign-name": "Solar Panel Installation",
+    "campaign-description": "Install solar panels on community center roof to reduce energy costs and promote renewable energy. Make our neighborhood more sustainable.",
+    "campaign-goal": "40",
+    "campaign_deadline": "35"
+  },
+  {
+    "campaign-name": "Youth Sports Equipment",
+    "campaign-description": "Purchase sports equipment for local youth soccer and basketball teams. Give kids the tools they need to stay active and healthy.",
+    "campaign-goal": "12",
+    "campaign_deadline": "25"
+  },
+  {
+    "campaign-name": "Senior Center Meals Program",
+    "campaign-description": "Fund nutritious meals for elderly community members. Help ensure our seniors have access to healthy food and social connection.",
+    "campaign-goal": "30",
+    "campaign_deadline": "40"
+  },
+  {
+    "campaign-name": "Street Art Beautification",
+    "campaign-description": "Commission local artists to create beautiful murals and street art to revitalize downtown area. Art brings communities together.",
+    "campaign-goal": "20",
+    "campaign_deadline": "28"
+  },
+  {
+    "campaign-name": "Mobile Library Van",
+    "campaign-description": "Purchase and outfit a van to bring books and educational resources to remote communities. Literacy should be accessible to everyone.",
+    "campaign-goal": "85",
+    "campaign_deadline": "50"
+  },
+  {
+    "campaign-name": "Emergency Food Bank",
+    "campaign-description": "Stock our community food bank with non-perishable items to help families in need. No one should go hungry in our neighborhood.",
+    "campaign-goal": "35",
+    "campaign_deadline": "15"
+  }
+]
