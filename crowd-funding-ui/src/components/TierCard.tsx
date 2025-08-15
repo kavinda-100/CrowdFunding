@@ -52,6 +52,9 @@ type TierCardProps = {
 };
 
 const TierCard = (props: TierCardProps) => {
+  const [isPaused, setIsPaused] = React.useState(false);
+  const [isPausedAlertOpen, setIsPausedAlertOpen] = React.useState(false);
+
   // Convert amount to ETH for better readability
   const amountInEth = formatEther(BigInt(props.amount));
   const isHighValue = Number(amountInEth) >= 1;
@@ -59,6 +62,27 @@ const TierCard = (props: TierCardProps) => {
   const { queryKey } = useReadContracts();
   const { queryKey: tiersQueryKey } = useReadContract();
   const queryClient = useQueryClient();
+
+  // get the pause state
+  const {
+    data: isPausedData,
+    isPending: isPausedPending,
+    isError: isPausedError,
+    error: pausedErrorMessage,
+  } = useReadContract({
+    address: props.campaignAddress as `0x${string}`,
+    abi: CrowdFundingContractAbi.abi,
+    functionName: "getIsPaused",
+    args: [],
+  });
+
+  React.useEffect(() => {
+    if (isPausedData && !isPausedPending && !isPausedError) {
+      setIsPaused(isPausedData as boolean);
+    } else {
+      console.error("Error fetching pause state:", pausedErrorMessage);
+    }
+  }, [isPausedData, isPausedError, isPausedPending, pausedErrorMessage]);
 
   // Fund Tier states
   const {
@@ -91,6 +115,12 @@ const TierCard = (props: TierCardProps) => {
 
   // fund the Tier handler
   const handleFundTier = async () => {
+    // if paused, show alert
+    if (isPaused) {
+      setIsPausedAlertOpen(true);
+      return;
+    }
+    // else proceed with funding the tier
     fundTierWriteContract(
       {
         address: props.campaignAddress as `0x${string}`,
@@ -118,6 +148,12 @@ const TierCard = (props: TierCardProps) => {
 
   // Remove the Tier handler
   const handleRemoveTier = async () => {
+    // if paused, show alert
+    if (isPaused) {
+      setIsPausedAlertOpen(true);
+      return;
+    }
+    // else proceed with funding the tier
     removeTierWriteContract(
       {
         address: props.campaignAddress as `0x${string}`,
@@ -579,6 +615,26 @@ const TierCard = (props: TierCardProps) => {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Paused Alert dialog */}
+      <AlertDialog open={isPausedAlertOpen} onOpenChange={setIsPausedAlertOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              You can not perform this action while the campaign is paused.
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be done. This campaign is currently paused due
+              to an ongoing process. Please try again later.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setIsPausedAlertOpen(false)}>
+              Cancel
+            </AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
