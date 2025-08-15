@@ -285,7 +285,9 @@ const ContractDetailsPage = () => {
       <CampaignTiers campaignAddress={address} />
 
       {/* Pause Campaign Button (only visible to owner) */}
-      {campaignOwner?.result === userAddress && <PauseCampaign />}
+      {campaignOwner?.result === userAddress && (
+        <PauseCampaign campaignAddress={address} />
+      )}
 
       {/* extend the deadline of the campaign (only visible to owner) */}
       {/* campaignOwner?.result === userAddress && <ExtendCampaignDeadline /> */}
