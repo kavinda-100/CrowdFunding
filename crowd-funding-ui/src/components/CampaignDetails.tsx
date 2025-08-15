@@ -13,6 +13,7 @@ import {
   Activity,
   Coins,
   Sparkles,
+  CheckCircle,
 } from "lucide-react";
 import {
   Select,
@@ -31,7 +32,7 @@ type CampaignDetailsProps = {
   campaignDescription: string;
   campaignGoal: number;
   campaignDeadline: Date;
-  campaignStatus: "Active" | "Successful" | "Failed";
+  campaignStatus: 0 | 1 | 2; // "Active" = 0 | "Successful" = 1 | "Failed" = 2;
   totalBalance: number;
 };
 
@@ -72,9 +73,9 @@ const CampaignDetails = (props: CampaignDetailsProps) => {
   };
 
   // Get status color and icon
-  const getStatusConfig = (status: string) => {
+  const getStatusConfig = (status: number) => {
     switch (status) {
-      case "Active":
+      case 0:
         return {
           icon: <Activity className="h-5 w-5" />,
           color: "bg-gradient-to-r from-green-500 to-emerald-500",
@@ -82,7 +83,7 @@ const CampaignDetails = (props: CampaignDetailsProps) => {
           bgColor: "bg-gradient-to-r from-green-500/10 to-emerald-500/10",
           borderColor: "border-green-200 dark:border-green-800",
         };
-      case "Successful":
+      case 1:
         return {
           icon: <CheckCircle2 className="h-5 w-5" />,
           color: "bg-gradient-to-r from-blue-500 to-purple-500",
@@ -90,7 +91,7 @@ const CampaignDetails = (props: CampaignDetailsProps) => {
           bgColor: "bg-gradient-to-r from-blue-500/10 to-purple-500/10",
           borderColor: "border-blue-200 dark:border-blue-800",
         };
-      case "Failed":
+      case 2:
         return {
           icon: <XCircle className="h-5 w-5" />,
           color: "bg-gradient-to-r from-red-500 to-rose-500",
@@ -106,6 +107,20 @@ const CampaignDetails = (props: CampaignDetailsProps) => {
           bgColor: "bg-gradient-to-r from-gray-500/10 to-slate-500/10",
           borderColor: "border-gray-200 dark:border-gray-800",
         };
+    }
+  };
+
+  // get status in text
+  const getStatusInText = (status: number) => {
+    switch (status) {
+      case 0:
+        return "Active";
+      case 1:
+        return "Successful";
+      case 2:
+        return "Failed";
+      default:
+        return "Unknown";
     }
   };
 
@@ -169,9 +184,11 @@ const CampaignDetails = (props: CampaignDetailsProps) => {
               )}
             >
               {statusConfig.icon}
-              <span className="ml-2 font-semibold">{props.campaignStatus}</span>
+              <span className="ml-2 font-semibold">
+                {getStatusInText(props.campaignStatus)}
+              </span>
             </Badge>
-            {timeRemaining > 0 && props.campaignStatus === "Active" && (
+            {timeRemaining > 0 && (
               <Badge className="border-orange-200 bg-gradient-to-r from-orange-500/10 to-yellow-500/10 text-orange-700 dark:border-orange-800 dark:text-orange-300">
                 <Clock className="mr-1 h-3 w-3" />
                 {timeRemainingText}
@@ -328,7 +345,8 @@ const CampaignDetails = (props: CampaignDetailsProps) => {
                   </div>
                 </div>
 
-                {props.campaignStatus === "Active" && (
+                {/* Time Remaining */}
+                {props.campaignStatus === 0 && (
                   <div className="flex items-center gap-3 rounded-lg border border-green-200 bg-gradient-to-r from-green-50 to-emerald-50 p-3 dark:border-green-800 dark:from-green-950/20 dark:to-emerald-950/20">
                     <Clock className="h-5 w-5 text-green-600 dark:text-green-400" />
                     <div>
@@ -337,6 +355,20 @@ const CampaignDetails = (props: CampaignDetailsProps) => {
                       </div>
                       <div className="text-sm text-green-600 dark:text-green-400">
                         {timeRemainingText}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {/* If successful */}
+                {props.campaignStatus === 1 && (
+                  <div className="flex items-center gap-3 rounded-lg border border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50 p-3 dark:border-blue-800 dark:from-blue-950/20 dark:to-cyan-950/20">
+                    <CheckCircle className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                    <div>
+                      <div className="font-semibold text-blue-700 dark:text-blue-300">
+                        Campaign Successful
+                      </div>
+                      <div className="text-sm text-blue-600 dark:text-blue-400">
+                        Thank you for your support!
                       </div>
                     </div>
                   </div>

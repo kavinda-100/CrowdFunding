@@ -201,7 +201,7 @@ const ContractDetailsPage = () => {
               : new Date()
           }
           campaignStatus={
-            campaignStatus?.result as "Active" | "Successful" | "Failed"
+            campaignStatus?.result as 0 | 1 | 2 // "Active" = 0 | "Successful" = 1 | "Failed" = 2
           }
           totalBalance={
             campaignBalance?.result ? Number(campaignBalance.result) : 0
