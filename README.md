@@ -5,6 +5,8 @@
 ![Ethereum](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white)
 ![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white)
 ![Foundry](https://img.shields.io/badge/Foundry-000000?style=for-the-badge&logo=ethereum&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 
 **A decentralized crowdfunding platform built on Ethereum** 💰
 
@@ -37,8 +39,12 @@ crowd-funding/
 │   ├── 📄 test/                  # Contract tests
 │   ├── 📄 script/                # Deployment scripts
 │   └── 📖 README.md              # Contract documentation
-├── 📁 crowd-funding-ui/          # Frontend (Coming Soon)
+├── 📁 crowd-funding-ui/          # Frontend Application
+│   ├── 📄 src/                   # React components & pages
+│   ├── 📄 components/            # Reusable UI components
+│   ├── 📄 abi/                   # Smart contract ABIs
 │   └── 📖 README.md              # UI documentation
+├── 📄 sample-campaigns.json      # Sample campaign data
 └── 📖 README.md                  # This file
 ```
 
@@ -48,7 +54,8 @@ crowd-funding/
 
 - [Git](https://git-scm.com/)
 - [Foundry](https://book.getfoundry.sh/getting-started/installation)
-- [Bun](https://bun.sh/) (for frontend - coming soon)
+- [Bun](https://bun.sh/) (for frontend)
+- [MetaMask](https://metamask.io/) or compatible Web3 wallet
 
 ### Installation
 
@@ -73,12 +80,52 @@ crowd-funding/
    forge test
    ```
 
-4. **Check test coverage**
+4. **Setup frontend application**
 
    ```bash
-   cd crowd-funding-contract
-   forge coverage
+   cd ../crowd-funding-ui
+   bun install
    ```
+
+5. **Start the development server**
+
+   ```bash
+   bun dev
+   ```
+
+   The application will be available at `http://localhost:3000`
+
+## 🎨 Frontend Application
+
+### 🌟 Features Implemented
+
+- **🏠 Home Page**: Featured campaigns showcase with wallet connection
+- **📊 Campaign Details**: Comprehensive campaign information with funding tiers
+- **💰 Campaign Creation**: Step-by-step campaign creation wizard
+- **🎯 Tier Management**: Add, fund, and remove campaign tiers
+- **💸 Fund Campaigns**: Seamless funding process with transaction tracking
+- **🏭 Factory Integration**: Deploy new campaigns through factory contract
+- **⏸️ Campaign Control**: Pause/resume campaigns (owner only)
+- **⏰ Deadline Management**: Extend campaign deadlines (owner only)
+- **💵 Fund Withdrawal**: Withdraw campaign funds with balance tracking
+- **🔄 Real-time Updates**: Live campaign status and funding progress
+- **🌙 Dark/Light Mode**: System preference detection
+- **📱 Responsive Design**: Mobile-first approach with modern layouts
+
+### 🛠️ Technology Stack
+
+- **Next.js 15**: React framework with App Router
+- **React 19**: Latest React with concurrent features
+- **TypeScript**: Type-safe development environment
+- **TailwindCSS**: Utility-first CSS framework
+- **ShadCN UI**: High-quality, accessible components
+- **Wagmi**: React hooks for Ethereum integration
+- **RainbowKit**: Modern wallet connection interface
+- **TanStack Query**: Powerful data synchronization
+- **React Hook Form**: Performant forms with validation
+- **Zod**: TypeScript-first schema validation
+- **Lucide React**: Beautiful & consistent icons
+- **Bun.js**: Fast JavaScript runtime and package manager
 
 ## 🧪 Testing & Coverage
 
@@ -137,19 +184,21 @@ The backbone of our platform, built with Solidity and deployed on Ethereum.
 - Gas-optimized implementation
 - Security-first approach
 
-### 🎨 Frontend (Coming Soon)
+### 🎨 Frontend UI
 
 A modern, responsive web interface built with the latest technologies.
 
-**[📖 View UI Documentation](./crowd-funding-ui/README.md)** *(Coming Soon)*
+**[📖 View UI Documentation](./crowd-funding-ui/README.md)**
 
 - Next.js 15 with React 19
 - TypeScript for type safety
-- TailwindCSS & ShadCN UI for styling
-- Wagmi & RainbowKit for Web3 integration
-- Bun.js runtime for performance
+- TailwindCSS & ShadCN UI for stunning design
+- Wagmi & RainbowKit for seamless Web3 integration
+- Complete campaign management interface
+- Real-time transaction tracking
+- Responsive design with dark/light mode support
 
-## 🛠️ Technology Stack
+## 🛠️ Complete Technology Stack
 
 <div align="center">
 
@@ -158,10 +207,13 @@ A modern, responsive web interface built with the latest technologies.
 | **Blockchain** | Ethereum, Solidity ^0.8.24 |
 | **Development** | Foundry, OpenZeppelin |
 | **Testing** | Forge, Gas Snapshots |
-| **Frontend** | Next.js 15, React 19, TypeScript *(Coming Soon)* |
-| **Styling** | TailwindCSS, ShadCN UI *(Coming Soon)* |
-| **Web3** | Wagmi, RainbowKit *(Coming Soon)* |
-| **Runtime** | Bun.js *(Coming Soon)* |
+| **Frontend** | Next.js 15, React 19, TypeScript |
+| **Styling** | TailwindCSS, ShadCN UI |
+| **Web3** | Wagmi v2, RainbowKit |
+| **Runtime** | Bun.js |
+| **Forms** | React Hook Form, Zod |
+| **Icons** | Lucide React |
+| **State** | TanStack Query |
 
 </div>
 
@@ -170,10 +222,10 @@ A modern, responsive web interface built with the latest technologies.
 | Component | Status | Progress | Details |
 |-----------|--------|----------|---------|
 | 📜 Smart Contracts | ✅ Complete | 100% | Factory + Campaign contracts |
-| 🧪 Contract Tests | ✅ Complete | 100% | 32 tests, full coverage |
+| 🧪 Contract Tests | ✅ Complete | 100% | 40 tests, full coverage |
 | 🚀 Deployment Scripts | ✅ Complete | 100% | JSON deployment tracking |
-| 🎨 Frontend UI | 📅 Planned | 0% | Next.js 15 + React 19 |
-| 🔗 Web3 Integration | 📅 Planned | 0% | Wagmi + RainbowKit |
+| 🎨 Frontend UI | ✅ Complete | 100% | Next.js 15 + React 19 |
+| 🔗 Web3 Integration | ✅ Complete | 100% | Wagmi + RainbowKit |
 | 📖 Documentation | ✅ Complete | 100% | Comprehensive README files |
 
 ## 📊 Test Coverage Summary
