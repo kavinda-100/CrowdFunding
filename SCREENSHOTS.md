@@ -108,7 +108,8 @@ Experience the full campaign lifecycle from creation to funding.
 
 *Flexible tier-based funding with rewards*
 
-![Campaign Page - Funding Tiers](img/campaign-3.png)
+![Campaign Page - Funding Tiers](img/campaign-2.png)
+![Campaign Page - Funding Tiers-2](img/campaign-3.png)
 
 ---
 
