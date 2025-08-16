@@ -109,11 +109,18 @@ Experience the full campaign lifecycle from creation to funding.
 *Flexible tier-based funding with rewards*
 
 ![Campaign Page - Funding Tiers](img/campaign-2.png)
+
+---
+
+### 💎 Add Tiers (Only Owner)
+
+*Add new tiers to campaign*
+
 ![Campaign Page - Funding Tiers-2](img/campaign-3.png)
 
 ---
 
-### ⏸️ Pause and Extend deadlines
+### ⏸️ Pause and Extend deadlines (Only Owner)
 
 *Intuitive funding process with real-time updates*
 
@@ -121,7 +128,7 @@ Experience the full campaign lifecycle from creation to funding.
 
 ---
 
-### 💸 Transaction Management
+### 💸 Transaction Management (Only Owner)
 
 *Secure transaction processing with Withdrawals*
 
