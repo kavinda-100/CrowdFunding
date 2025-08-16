@@ -292,6 +292,12 @@ Kavinda Rathnayake
 - [Foundry](https://book.getfoundry.sh/) for excellent development tooling
 - [Ethereum](https://ethereum.org/) for the decentralized platform
 
+## 🌆 Screenshots
+
+![Home Page](img/home-1.png)
+
+- [More screenshots](SCREENSHOTS.md) ➡️
+
 ---
 
 <div align="center">
