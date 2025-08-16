@@ -297,6 +297,7 @@ Kavinda Rathnayake
 ![Home Page](img/home-1.png)
 
 - [More screenshots](SCREENSHOTS.md) ➡️
+- [Demo](https://drive.google.com/file/d/1zAPmANS8wixv5Z0oHXkDwFqizqHo07va/view?usp=sharing) ➡️
 
 ---
 
