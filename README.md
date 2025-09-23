@@ -10,7 +10,31 @@
 
 **A decentralized crowdfunding platform built on Ethereum** 💰
 
-*Empowering creators and supporting innovators through blockchain technology*
+_Empowering creators and supporting innovators through blockchain technology_
+
+</div>
+
+---
+
+## 🌐 Live Deployment
+
+<div>
+
+### 🎉 **Project is LIVE on Sepolia Testnet!** 🎉
+
+| Network             | Contract Address                                                                                                                | Status      |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| **Sepolia Testnet** | [`0x1de0D33b2DeA06e04ed819c744d0B032028fe2c0`](https://sepolia.etherscan.io/address/0x1de0d33b2dea06e04ed819c744d0b032028fe2c0) | ✅ Verified |
+
+**🔗 Etherscan:** [View Contract](https://sepolia.etherscan.io/address/0x1de0d33b2dea06e04ed819c744d0b032028fe2c0)
+
+**📊 Deployment Details:**
+
+- **Block Number:** 9,263,121
+- **Chain ID:** 11155111 (Sepolia)
+- **Gas Used:** 3,438,011
+- **Gas Price:** 0.001000316 gwei
+- **Total Cost:** 0.000003439097411476 ETH
 
 </div>
 
@@ -34,18 +58,18 @@ The CrowdFunding DApp is a comprehensive decentralized application that enables 
 
 ```md
 crowd-funding/
-├── 📁 crowd-funding-contract/    # Smart contracts & tests
-│   ├── 📄 src/                   # Solidity contracts
-│   ├── 📄 test/                  # Contract tests
-│   ├── 📄 script/                # Deployment scripts
-│   └── 📖 README.md              # Contract documentation
-├── 📁 crowd-funding-ui/          # Frontend Application
-│   ├── 📄 src/                   # React components & pages
-│   ├── 📄 components/            # Reusable UI components
-│   ├── 📄 abi/                   # Smart contract ABIs
-│   └── 📖 README.md              # UI documentation
-├── 📄 sample-campaigns.json      # Sample campaign data
-└── 📖 README.md                  # This file
+├── 📁 crowd-funding-contract/ # Smart contracts & tests
+│ ├── 📄 src/ # Solidity contracts
+│ ├── 📄 test/ # Contract tests
+│ ├── 📄 script/ # Deployment scripts
+│ └── 📖 README.md # Contract documentation
+├── 📁 crowd-funding-ui/ # Frontend Application
+│ ├── 📄 src/ # React components & pages
+│ ├── 📄 components/ # Reusable UI components
+│ ├── 📄 abi/ # Smart contract ABIs
+│ └── 📖 README.md # UI documentation
+├── 📄 sample-campaigns.json # Sample campaign data
+└── 📖 README.md # This file
 ```
 
 ## 🚀 Quick Start
@@ -135,23 +159,23 @@ The project maintains **100% test coverage** across all contracts with both unit
 
 #### Coverage Summary
 
-| File | Lines | Statements | Branches | Functions |
-|------|-------|------------|----------|-----------|
-| **CrowdFunding.sol** | 100% (98/98) | 100% (76/76) | 100% (19/19) | 100% (24/24) |
-| **CrowdFundingFactory.sol** | 100% (15/15) | 100% (11/11) | 100% (1/1) | 100% (5/5) |
-| **DeployCrowdFundingFactory.s.sol** | 100% (24/24) | 100% (24/24) | 100% (1/1) | 100% (2/2) |
-| **Total** | 🎯 **100% (137/137)** | 🎯 **100% (111/111)** | 🎯 **100% (21/21)** | 🎯 **100% (31/31)** |
+| File                                | Lines                 | Statements            | Branches            | Functions           |
+| ----------------------------------- | --------------------- | --------------------- | ------------------- | ------------------- |
+| **CrowdFunding.sol**                | 100% (98/98)          | 100% (76/76)          | 100% (19/19)        | 100% (24/24)        |
+| **CrowdFundingFactory.sol**         | 100% (15/15)          | 100% (11/11)          | 100% (1/1)          | 100% (5/5)          |
+| **DeployCrowdFundingFactory.s.sol** | 100% (24/24)          | 100% (24/24)          | 100% (1/1)          | 100% (2/2)          |
+| **Total**                           | 🎯 **100% (137/137)** | 🎯 **100% (111/111)** | 🎯 **100% (21/21)** | 🎯 **100% (31/31)** |
 
 #### Test Structure
 
 ```md
 test/
-├── 📁 unit/                      # Unit tests (36 tests)
-│   ├── CrowdFundingTest.t.sol    # Core contract tests (31 tests)
-│   └── CrowdFundingFactoryTest.t.sol # Factory tests (5 tests)
-└── 📁 fuzz/                      # Fuzz tests (4 tests)
-    ├── CrowdFundingFuzzTest.t.sol # Contract fuzz tests (3 tests)
-    └── CrowdFundingFactoryFuzzTest.t.sol # Factory fuzz tests (1 test)
+├── 📁 unit/ # Unit tests (36 tests)
+│ ├── CrowdFundingTest.t.sol # Core contract tests (31 tests)
+│ └── CrowdFundingFactoryTest.t.sol # Factory tests (5 tests)
+└── 📁 fuzz/ # Fuzz tests (4 tests)
+├── CrowdFundingFuzzTest.t.sol # Contract fuzz tests (3 tests)
+└── CrowdFundingFactoryFuzzTest.t.sol # Factory fuzz tests (1 test)
 ```
 
 #### Test Statistics
@@ -164,7 +188,7 @@ test/
 #### Test Categories
 
 - **Core Functionality**: Campaign creation, funding, withdrawals, refunds
-- **Access Control**: Owner-only functions, permission validation  
+- **Access Control**: Owner-only functions, permission validation
 - **Edge Cases**: Invalid inputs, boundary conditions, failure scenarios
 - **State Management**: Campaign status transitions, pause/resume functionality
 - **Event Emissions**: Proper event logging for all state changes
@@ -202,41 +226,41 @@ A modern, responsive web interface built with the latest technologies.
 
 <div align="center">
 
-| Layer | Technology |
-|-------|------------|
-| **Blockchain** | Ethereum, Solidity ^0.8.24 |
-| **Development** | Foundry, OpenZeppelin |
-| **Testing** | Forge, Gas Snapshots |
-| **Frontend** | Next.js 15, React 19, TypeScript |
-| **Styling** | TailwindCSS, ShadCN UI |
-| **Web3** | Wagmi v2, RainbowKit |
-| **Runtime** | Bun.js |
-| **Forms** | React Hook Form, Zod |
-| **Icons** | Lucide React |
-| **State** | TanStack Query |
+| Layer           | Technology                       |
+| --------------- | -------------------------------- |
+| **Blockchain**  | Ethereum, Solidity ^0.8.24       |
+| **Development** | Foundry, OpenZeppelin            |
+| **Testing**     | Forge, Gas Snapshots             |
+| **Frontend**    | Next.js 15, React 19, TypeScript |
+| **Styling**     | TailwindCSS, ShadCN UI           |
+| **Web3**        | Wagmi v2, RainbowKit             |
+| **Runtime**     | Bun.js                           |
+| **Forms**       | React Hook Form, Zod             |
+| **Icons**       | Lucide React                     |
+| **State**       | TanStack Query                   |
 
 </div>
 
 ## 📋 Development Status
 
-| Component | Status | Progress | Details |
-|-----------|--------|----------|---------|
-| 📜 Smart Contracts | ✅ Complete | 100% | Factory + Campaign contracts |
-| 🧪 Contract Tests | ✅ Complete | 100% | 40 tests, full coverage |
-| 🚀 Deployment Scripts | ✅ Complete | 100% | JSON deployment tracking |
-| 🎨 Frontend UI | ✅ Complete | 100% | Next.js 15 + React 19 |
-| 🔗 Web3 Integration | ✅ Complete | 100% | Wagmi + RainbowKit |
-| 📖 Documentation | ✅ Complete | 100% | Comprehensive README files |
+| Component             | Status      | Progress | Details                      |
+| --------------------- | ----------- | -------- | ---------------------------- |
+| 📜 Smart Contracts    | ✅ Complete | 100%     | Factory + Campaign contracts |
+| 🧪 Contract Tests     | ✅ Complete | 100%     | 40 tests, full coverage      |
+| 🚀 Deployment Scripts | ✅ Complete | 100%     | JSON deployment tracking     |
+| 🎨 Frontend UI        | ✅ Complete | 100%     | Next.js 15 + React 19        |
+| 🔗 Web3 Integration   | ✅ Complete | 100%     | Wagmi + RainbowKit           |
+| 📖 Documentation      | ✅ Complete | 100%     | Comprehensive README files   |
 
 ## 📊 Test Coverage Summary
 
 ### Smart Contract Testing
 
-| Contract | Lines | Statements | Branches | Functions | Status |
-|----------|-------|------------|----------|-----------|--------|
-| **CrowdFunding.sol** | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | ✅ **Perfect** |
+| Contract                    | Lines       | Statements  | Branches    | Functions   | Status         |
+| --------------------------- | ----------- | ----------- | ----------- | ----------- | -------------- |
+| **CrowdFunding.sol**        | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | ✅ **Perfect** |
 | **CrowdFundingFactory.sol** | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | ✅ **Perfect** |
-| **Deployment Scripts** | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | ✅ **Perfect** |
+| **Deployment Scripts**      | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | 🟢 **100%** | ✅ **Perfect** |
 
 ### Test Statistics
 
@@ -250,8 +274,9 @@ A modern, responsive web interface built with the latest technologies.
 ### Coverage Highlights
 
 ✅ **Complete Coverage Areas:**
+
 - All core functions (fund, withdraw, refund)
-- All view functions and getters  
+- All view functions and getters
 - Access control and security mechanisms
 - Input validation and error handling
 - Time-based logic and state transitions
@@ -305,6 +330,6 @@ Kavinda Rathnayake
 
 - **Built with ❤️ for the decentralized future**
 
-⭐ *If you found this project helpful, please give it a star!* ⭐
+⭐ _If you found this project helpful, please give it a star!_ ⭐
 
 </div>

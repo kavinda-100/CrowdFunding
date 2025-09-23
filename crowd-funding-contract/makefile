@@ -55,14 +55,6 @@ deploy-local:
 		--private-key $(ANVIL_PRIVATE_KEY) \
 		--broadcast
 
-# Deploy to local Anvil with verification
-deploy-local-verify:
-	forge script script/DeployCrowdFundingFactory.s.sol:DeployCrowdFundingFactory \
-		--fork-url $(ANVIL_RPC_URL) \
-		--private-key $(ANVIL_PRIVATE_KEY) \
-		--broadcast \
-		--verify
-
 # Deploy to Sepolia testnet (requires SEPOLIA_RPC_URL and PRIVATE_KEY env vars)
 deploy-sepolia:
 	@if [ -z "$(SEPOLIA_RPC_URL)" ] || [ -z "$(PRIVATE_KEY)" ]; then \

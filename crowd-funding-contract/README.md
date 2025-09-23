@@ -12,19 +12,52 @@
 
 ---
 
+## 🚀 Live Deployment
+
+### 🌐 Sepolia Testnet Deployment
+
+The CrowdFundingFactory contract is **successfully deployed and verified** on Sepolia testnet:
+
+| Parameter               | Value                                                                                                                           |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **Contract Address**    | [`0x1de0D33b2DeA06e04ed819c744d0B032028fe2c0`](https://sepolia.etherscan.io/address/0x1de0d33b2dea06e04ed819c744d0b032028fe2c0) |
+| **Network**             | Sepolia Testnet (Chain ID: 11155111)                                                                                            |
+| **Block Number**        | 9,263,121                                                                                                                       |
+| **Transaction Hash**    | `0xb2010696552f5a792b86f3f812c0a7c6c793ca3c82178a4e8b9162424702b07b`                                                            |
+| **Verification Status** | ✅ **Verified**                                                                                                                 |
+| **Compiler Version**    | 0.8.30                                                                                                                          |
+| **EVM Version**         | Prague                                                                                                                          |
+
+**📊 Gas Metrics:**
+
+- **Gas Used:** 3,438,011
+- **Gas Price:** 0.001000316 gwei
+- **Deployment Cost:** 0.000003439097411476 ETH
+
+**🔗 Quick Links:**
+
+- [View on Etherscan](https://sepolia.etherscan.io/address/0x1de0d33b2dea06e04ed819c744d0b032028fe2c0)
+- [Contract Source Code](https://sepolia.etherscan.io/address/0x1de0d33b2dea06e04ed819c744d0b032028fe2c0#code)
+
+---
+
 ## 🏗️ Architecture Overview
 
 The CrowdFunding smart contract system follows a **Factory Pattern** design, consisting of two main contracts:
 
 ### 🏭 CrowdFundingFactory
+
 The main factory contract responsible for:
+
 - Creating new crowdfunding campaigns
 - Managing all campaigns globally
 - Tracking user-specific campaigns
 - Providing campaign discovery functionality
 
 ### 🎯 CrowdFunding
+
 Individual campaign contracts that handle:
+
 - Campaign lifecycle management
 - Funding tiers and backer tracking
 - Secure fund collection and withdrawal
@@ -35,26 +68,26 @@ Individual campaign contracts that handle:
 
 ### 🎯 CrowdFunding Contract Features
 
-| Feature | Description | Status |
-|---------|-------------|--------|
-| 🏁 **Campaign Creation** | Deploy individual campaigns with goals & deadlines | ✅ |
-| 💰 **Tiered Funding** | Multiple funding levels with different rewards | ✅ |
-| ⏰ **Time Management** | Automatic campaign state transitions | ✅ |
-| 💸 **Secure Withdrawals** | Owner-only withdrawals after goal completion | ✅ |
-| 🔄 **Automatic Refunds** | Smart refunds for failed campaigns | ✅ |
-| ⏸️ **Pause/Resume** | Campaign control for owners | ✅ |
-| 📈 **Real-time Status** | Live campaign status tracking | ✅ |
-| 🔒 **Access Control** | OpenZeppelin Ownable integration | ✅ |
+| Feature                   | Description                                        | Status |
+| ------------------------- | -------------------------------------------------- | ------ |
+| 🏁 **Campaign Creation**  | Deploy individual campaigns with goals & deadlines | ✅     |
+| 💰 **Tiered Funding**     | Multiple funding levels with different rewards     | ✅     |
+| ⏰ **Time Management**    | Automatic campaign state transitions               | ✅     |
+| 💸 **Secure Withdrawals** | Owner-only withdrawals after goal completion       | ✅     |
+| 🔄 **Automatic Refunds**  | Smart refunds for failed campaigns                 | ✅     |
+| ⏸️ **Pause/Resume**       | Campaign control for owners                        | ✅     |
+| 📈 **Real-time Status**   | Live campaign status tracking                      | ✅     |
+| 🔒 **Access Control**     | OpenZeppelin Ownable integration                   | ✅     |
 
 ### 🏭 CrowdFundingFactory Contract Features
 
-| Feature | Description | Status |
-|---------|-------------|--------|
-| 🚀 **Campaign Deployment** | Deploy new CrowdFunding contracts | ✅ |
-| 📊 **Global Campaign Registry** | Track all created campaigns | ✅ |
-| 👤 **User Campaign Tracking** | Track campaigns by creator | ✅ |
-| 🔍 **Campaign Discovery** | Query campaigns by various filters | ✅ |
-| 🛡️ **Input Validation** | Comprehensive parameter validation | ✅ |
+| Feature                         | Description                        | Status |
+| ------------------------------- | ---------------------------------- | ------ |
+| 🚀 **Campaign Deployment**      | Deploy new CrowdFunding contracts  | ✅     |
+| 📊 **Global Campaign Registry** | Track all created campaigns        | ✅     |
+| 👤 **User Campaign Tracking**   | Track campaigns by creator         | ✅     |
+| 🔍 **Campaign Discovery**       | Query campaigns by various filters | ✅     |
+| 🛡️ **Input Validation**         | Comprehensive parameter validation | ✅     |
 
 ## 🏗️ Contract Structure
 
@@ -112,12 +145,14 @@ function getUserCampaigns(address _user) external view returns (Campaign[] memor
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/kavinda-100/CrowdFunding.git
    cd CrowdFunding/crowd-funding-contract
    ```
 
 2. **Install dependencies**
+
    ```bash
    forge install
    ```
@@ -151,12 +186,12 @@ forge coverage
 
 This project maintains **100% test coverage** across all contracts with comprehensive unit and fuzz testing:
 
-| File | Lines | Statements | Branches | Functions |
-|------|-------|------------|----------|-----------|
-| **CrowdFunding.sol** | 🎯 **100%** (98/98) | 🎯 **100%** (76/76) | 🎯 **100%** (19/19) | 🎯 **100%** (24/24) |
-| **CrowdFundingFactory.sol** | 🎯 **100%** (15/15) | 🎯 **100%** (11/11) | 🎯 **100%** (1/1) | 🎯 **100%** (5/5) |
-| **DeployCrowdFundingFactory.s.sol** | 🎯 **100%** (24/24) | 🎯 **100%** (24/24) | 🎯 **100%** (1/1) | 🎯 **100%** (2/2) |
-| **Total** | 🎯 **100%** (137/137) | 🎯 **100%** (111/111) | 🎯 **100%** (21/21) | 🎯 **100%** (31/31) |
+| File                                | Lines                 | Statements            | Branches            | Functions           |
+| ----------------------------------- | --------------------- | --------------------- | ------------------- | ------------------- |
+| **CrowdFunding.sol**                | 🎯 **100%** (98/98)   | 🎯 **100%** (76/76)   | 🎯 **100%** (19/19) | 🎯 **100%** (24/24) |
+| **CrowdFundingFactory.sol**         | 🎯 **100%** (15/15)   | 🎯 **100%** (11/11)   | 🎯 **100%** (1/1)   | 🎯 **100%** (5/5)   |
+| **DeployCrowdFundingFactory.s.sol** | 🎯 **100%** (24/24)   | 🎯 **100%** (24/24)   | 🎯 **100%** (1/1)   | 🎯 **100%** (2/2)   |
+| **Total**                           | 🎯 **100%** (137/137) | 🎯 **100%** (111/111) | 🎯 **100%** (21/21) | 🎯 **100%** (31/31) |
 
 ### 🧪 Test Suite Overview
 
@@ -165,11 +200,11 @@ This project maintains **100% test coverage** across all contracts with comprehe
 ```md
 test/
 ├── 📁 unit/ (36 tests)
-│   ├── CrowdFundingTest.t.sol        # Core contract (31 tests)
-│   └── CrowdFundingFactoryTest.t.sol # Factory contract (5 tests)
+│ ├── CrowdFundingTest.t.sol # Core contract (31 tests)
+│ └── CrowdFundingFactoryTest.t.sol # Factory contract (5 tests)
 └── 📁 fuzz/ (4 tests)
-    ├── CrowdFundingFuzzTest.t.sol        # Property-based tests (3 tests)
-    └── CrowdFundingFactoryFuzzTest.t.sol # Factory fuzz tests (1 test)
+├── CrowdFundingFuzzTest.t.sol # Property-based tests (3 tests)
+└── CrowdFundingFactoryFuzzTest.t.sol # Factory fuzz tests (1 test)
 ```
 
 #### Test Statistics
@@ -191,7 +226,7 @@ test/
 - **Event Testing**: All events properly emitted and verified
 - **Security Testing**: Transfer failures, access control, input validation
 
-**CrowdFundingFactory.sol** (Factory Contract) 
+**CrowdFundingFactory.sol** (Factory Contract)
 
 - **Deployment Testing**: Contract creation via factory
 - **State Management**: Campaign arrays and mappings
@@ -235,12 +270,12 @@ test/
 
 ## 📈 Updated Coverage Summary
 
-| File | Lines | Statements | Branches | Functions | Status |
-|------|-------|------------|----------|-----------|--------|
-| **CrowdFunding.sol** | 🟢 **100%** (98/98) | 🟢 **100%** (76/76) | 🟢 **100%** (19/19) | 🟢 **100%** (24/24) | ✅ **Complete** |
-| **CrowdFundingFactory.sol** | 🟢 **100%** (15/15) | 🟢 **100%** (11/11) | 🟢 **100%** (1/1) | 🟢 **100%** (5/5) | ✅ **Complete** |
-| **DeployCrowdFundingFactory.s.sol** | 🟢 **100%** (24/24) | 🟢 **100%** (24/24) | 🟢 **100%** (1/1) | 🟢 **100%** (2/2) | ✅ **Complete** |
-| **Total Project** | 🟢 **100%** (137/137) | 🟢 **100%** (111/111) | 🟢 **100%** (21/21) | 🟢 **100%** (31/31) | 🎯 **Perfect** |
+| File                                | Lines                 | Statements            | Branches            | Functions           | Status          |
+| ----------------------------------- | --------------------- | --------------------- | ------------------- | ------------------- | --------------- |
+| **CrowdFunding.sol**                | 🟢 **100%** (98/98)   | 🟢 **100%** (76/76)   | 🟢 **100%** (19/19) | 🟢 **100%** (24/24) | ✅ **Complete** |
+| **CrowdFundingFactory.sol**         | 🟢 **100%** (15/15)   | 🟢 **100%** (11/11)   | 🟢 **100%** (1/1)   | 🟢 **100%** (5/5)   | ✅ **Complete** |
+| **DeployCrowdFundingFactory.s.sol** | 🟢 **100%** (24/24)   | 🟢 **100%** (24/24)   | 🟢 **100%** (1/1)   | 🟢 **100%** (2/2)   | ✅ **Complete** |
+| **Total Project**                   | 🟢 **100%** (137/137) | 🟢 **100%** (111/111) | 🟢 **100%** (21/21) | 🟢 **100%** (31/31) | 🎯 **Perfect**  |
 
 ## 📋 Detailed Contract Coverage
 
@@ -248,66 +283,69 @@ test/
 
 #### 🎯 Core Functions (100% Coverage)
 
-| Function | Test Cases | Coverage | Description |
-|----------|------------|----------|-------------|
-| `fund()` | 8 tests | 🟢 **100%** | Funding campaigns, tier validation, error cases |
-| `withdraw()` | 3 tests | 🟢 **100%** | Owner withdrawals, goal checks, transfer failures |
-| `refund()` | 4 tests | 🟢 **100%** | Failed campaign refunds, transfer failures |
-| `addTier()` | 3 tests | 🟢 **100%** | Tier creation, validation, access control |
-| `removeTier()` | 3 tests | 🟢 **100%** | Tier removal, validation, access control |
-| `togglePause()` | 1 test | 🟢 **100%** | Pause/unpause functionality |
-| `extendCampaignDeadline()` | 3 tests | 🟢 **100%** | Deadline extension, validation |
+| Function                   | Test Cases | Coverage    | Description                                       |
+| -------------------------- | ---------- | ----------- | ------------------------------------------------- |
+| `fund()`                   | 8 tests    | 🟢 **100%** | Funding campaigns, tier validation, error cases   |
+| `withdraw()`               | 3 tests    | 🟢 **100%** | Owner withdrawals, goal checks, transfer failures |
+| `refund()`                 | 4 tests    | 🟢 **100%** | Failed campaign refunds, transfer failures        |
+| `addTier()`                | 3 tests    | 🟢 **100%** | Tier creation, validation, access control         |
+| `removeTier()`             | 3 tests    | 🟢 **100%** | Tier removal, validation, access control          |
+| `togglePause()`            | 1 test     | 🟢 **100%** | Pause/unpause functionality                       |
+| `extendCampaignDeadline()` | 3 tests    | 🟢 **100%** | Deadline extension, validation                    |
 
 #### 🔍 View Functions (100% Coverage)
 
-| Function | Test Cases | Coverage | Description |
-|----------|------------|----------|-------------|
-| `getCampaignBalance()` | Multiple | 🟢 **100%** | Contract balance queries |
-| `getFundingTiers()` | 1 test | 🟢 **100%** | All tiers retrieval |
-| `getFundingTierInfo()` | 2 tests | 🟢 **100%** | Individual tier info, error cases |
-| `getTierCount()` | Multiple | 🟢 **100%** | Tier count validation |
-| `getBackerAmount()` | Multiple | 🟢 **100%** | Backer contribution queries |
-| `getBackerHasFundedTier()` | 2 tests | 🟢 **100%** | Tier funding status, error cases |
-| `getCampaignStatus()` | Multiple | 🟢 **100%** | Status calculations |
-| `getCampaignStatusRow()` | Multiple | 🟢 **100%** | Raw status queries |
-| `getIsPaused()` | Multiple | 🟢 **100%** | Pause state queries |
-| `getCampaignName()` | Multiple | 🟢 **100%** | Campaign name retrieval |
-| `getCampaignDescription()` | Multiple | 🟢 **100%** | Campaign description retrieval |
-| `getCampaignGoal()` | Multiple | 🟢 **100%** | Goal amount retrieval |
-| `getCampaignDeadline()` | Multiple | 🟢 **100%** | Deadline retrieval |
+| Function                   | Test Cases | Coverage    | Description                       |
+| -------------------------- | ---------- | ----------- | --------------------------------- |
+| `getCampaignBalance()`     | Multiple   | 🟢 **100%** | Contract balance queries          |
+| `getFundingTiers()`        | 1 test     | 🟢 **100%** | All tiers retrieval               |
+| `getFundingTierInfo()`     | 2 tests    | 🟢 **100%** | Individual tier info, error cases |
+| `getTierCount()`           | Multiple   | 🟢 **100%** | Tier count validation             |
+| `getBackerAmount()`        | Multiple   | 🟢 **100%** | Backer contribution queries       |
+| `getBackerHasFundedTier()` | 2 tests    | 🟢 **100%** | Tier funding status, error cases  |
+| `getCampaignStatus()`      | Multiple   | 🟢 **100%** | Status calculations               |
+| `getCampaignStatusRow()`   | Multiple   | 🟢 **100%** | Raw status queries                |
+| `getIsPaused()`            | Multiple   | 🟢 **100%** | Pause state queries               |
+| `getCampaignName()`        | Multiple   | 🟢 **100%** | Campaign name retrieval           |
+| `getCampaignDescription()` | Multiple   | 🟢 **100%** | Campaign description retrieval    |
+| `getCampaignGoal()`        | Multiple   | 🟢 **100%** | Goal amount retrieval             |
+| `getCampaignDeadline()`    | Multiple   | 🟢 **100%** | Deadline retrieval                |
 
 ### CrowdFundingFactory.sol - Detailed Test Coverage
 
 #### 🏭 Core Functions (100% Coverage)
 
-| Function | Test Cases | Coverage | Description |
-|----------|------------|----------|-------------|
-| `createCampaign()` | 4 tests | 🟢 **100%** | Campaign deployment, validation, events |
-| `getAllCampaigns()` | 2 tests | 🟢 **100%** | Campaign array retrieval, state updates |
-| `getUserCampaigns()` | 1 test | 🟢 **100%** | User-specific campaign filtering |
+| Function             | Test Cases | Coverage    | Description                             |
+| -------------------- | ---------- | ----------- | --------------------------------------- |
+| `createCampaign()`   | 4 tests    | 🟢 **100%** | Campaign deployment, validation, events |
+| `getAllCampaigns()`  | 2 tests    | 🟢 **100%** | Campaign array retrieval, state updates |
+| `getUserCampaigns()` | 1 test     | 🟢 **100%** | User-specific campaign filtering        |
 
 #### 🔍 View Functions (100% Coverage)
 
-| Function | Test Cases | Coverage | Description |
-|----------|------------|----------|-------------|
-| `getCampaignCount()` | Multiple | 🟢 **100%** | Total campaign count queries |
-| `getUserCampaignCount()` | Multiple | 🟢 **100%** | User campaign count queries |
+| Function                 | Test Cases | Coverage    | Description                  |
+| ------------------------ | ---------- | ----------- | ---------------------------- |
+| `getCampaignCount()`     | Multiple   | 🟢 **100%** | Total campaign count queries |
+| `getUserCampaignCount()` | Multiple   | 🟢 **100%** | User campaign count queries  |
 
 #### 🧪 Factory Test Categories
 
 **🔧 Deployment Testing**
+
 - Campaign contract creation via factory
 - Parameter validation during deployment
 - Event emission verification
 - Campaign array state management
 
 **🛡️ Input Validation Testing**
+
 - Invalid address handling (address(0))
 - Campaign parameter validation
 - Access control verification
 - State consistency validation
 
 **📊 State Management Testing**
+
 - Campaign array updates
 - User campaign tracking
 - Global campaign registry
@@ -317,23 +355,23 @@ test/
 
 **CrowdFunding.sol Security Testing**
 
-| Scenario | Test Cases | Coverage | Description |
-|----------|------------|----------|-------------|
-| **Access Control** | 6 tests | 🟢 **100%** | Owner-only functions, unauthorized access |
-| **Input Validation** | 5 tests | 🟢 **100%** | Invalid parameters, boundary conditions |
-| **Time-based Logic** | 3 tests | 🟢 **100%** | Deadline enforcement, state transitions |
-| **Transfer Failures** | 2 tests | 🟢 **100%** | ETH transfer failure scenarios |
-| **Pause Functionality** | 2 tests | 🟢 **100%** | Paused state enforcement |
-| **Campaign States** | 4 tests | 🟢 **100%** | Active, Successful, Failed states |
+| Scenario                | Test Cases | Coverage    | Description                               |
+| ----------------------- | ---------- | ----------- | ----------------------------------------- |
+| **Access Control**      | 6 tests    | 🟢 **100%** | Owner-only functions, unauthorized access |
+| **Input Validation**    | 5 tests    | 🟢 **100%** | Invalid parameters, boundary conditions   |
+| **Time-based Logic**    | 3 tests    | 🟢 **100%** | Deadline enforcement, state transitions   |
+| **Transfer Failures**   | 2 tests    | 🟢 **100%** | ETH transfer failure scenarios            |
+| **Pause Functionality** | 2 tests    | 🟢 **100%** | Paused state enforcement                  |
+| **Campaign States**     | 4 tests    | 🟢 **100%** | Active, Successful, Failed states         |
 
 **CrowdFundingFactory.sol Security Testing**
 
-| Scenario | Test Cases | Coverage | Description |
-|----------|------------|----------|-------------|
-| **Invalid Address Validation** | 1 test | 🟢 **100%** | Rejects address(0) for campaign creation |
-| **Input Parameter Validation** | 4 tests | 🟢 **100%** | Campaign name, description, goal, deadline validation |
-| **Event Emission Verification** | 1 test | 🟢 **100%** | Proper event logging for campaign creation |
-| **State Consistency** | 2 tests | 🟢 **100%** | Campaign arrays and mappings integrity |
+| Scenario                        | Test Cases | Coverage    | Description                                           |
+| ------------------------------- | ---------- | ----------- | ----------------------------------------------------- |
+| **Invalid Address Validation**  | 1 test     | 🟢 **100%** | Rejects address(0) for campaign creation              |
+| **Input Parameter Validation**  | 4 tests    | 🟢 **100%** | Campaign name, description, goal, deadline validation |
+| **Event Emission Verification** | 1 test     | 🟢 **100%** | Proper event logging for campaign creation            |
+| **State Consistency**           | 2 tests    | 🟢 **100%** | Campaign arrays and mappings integrity                |
 
 #### 📈 Complete Test Statistics
 
@@ -360,6 +398,7 @@ forge snapshot
 ### Local Deployment (Anvil)
 
 1. **Start local blockchain**
+
    ```bash
    anvil
    ```
@@ -372,6 +411,7 @@ forge snapshot
 ### Testnet Deployment
 
 1. **Set environment variables**
+
    ```bash
    export SEPOLIA_RPC_URL="your_sepolia_rpc_url"
    export PRIVATE_KEY="your_private_key"
@@ -422,20 +462,20 @@ The deployment script automatically generates a `deployment-summary.json` file c
 
 ```md
 crowd-funding-contract/
-├── 📁 src/                      # Smart contracts
-│   ├── CrowdFunding.sol
-│   └── CrowdFundingFactory.sol
-├── 📁 script/                   # Deployment scripts
-│   └── DeployCrowdFundingFactory.s.sol
-├── 📁 test/                     # Test files
-│   └── unit/
-│       ├── CrowdFundingTest.t.sol
-│       └── CrowdFundingFactoryTest.t.sol
-├── 📁 lib/                      # Dependencies
-│   ├── forge-std/
-│   └── openzeppelin-contracts/
-├── 📄 foundry.toml              # Foundry configuration
-└── 📖 README.md                 # This file
+├── 📁 src/ # Smart contracts
+│ ├── CrowdFunding.sol
+│ └── CrowdFundingFactory.sol
+├── 📁 script/ # Deployment scripts
+│ └── DeployCrowdFundingFactory.s.sol
+├── 📁 test/ # Test files
+│ └── unit/
+│ ├── CrowdFundingTest.t.sol
+│ └── CrowdFundingFactoryTest.t.sol
+├── 📁 lib/ # Dependencies
+│ ├── forge-std/
+│ └── openzeppelin-contracts/
+├── 📄 foundry.toml # Foundry configuration
+└── 📖 README.md # This file
 ```
 
 ## ⚙️ Configuration
@@ -464,12 +504,12 @@ fail_on_revert = false
 
 ## 🛠️ Development Tools
 
-| Tool | Purpose | Command |
-|------|---------|---------|
-| **Forge** | Testing Framework | `forge test` |
-| **Cast** | Contract Interaction | `cast call` |
-| **Anvil** | Local Blockchain | `anvil` |
-| **Chisel** | Solidity REPL | `chisel` |
+| Tool       | Purpose              | Command      |
+| ---------- | -------------------- | ------------ |
+| **Forge**  | Testing Framework    | `forge test` |
+| **Cast**   | Contract Interaction | `cast call`  |
+| **Anvil**  | Local Blockchain     | `anvil`      |
+| **Chisel** | Solidity REPL        | `chisel`     |
 
 ## 📚 Additional Resources
 

@@ -1,0 +1,8 @@
+{
+  "block_number": 9263119,
+  "chain_id": 11155111,
+  "contract_address": "0x1de0D33b2DeA06e04ed819c744d0B032028fe2c0",
+  "contract_name": "CrowdFundingFactory",
+  "deployment_timestamp": 1758636480,
+  "status": "deployed_successfully"
+}
