@@ -4,10 +4,9 @@ const envSchema = z.object({
   NODE_ENV: z
     .enum(["development", "test", "production"])
     .default("development"),
-  NEXT_PUBLIC_CROWDFUNDING_FACTORY_CONTRACT_ADDRESS: z
-    .string()
-    .startsWith("0x")
-    .length(42),
+  NEXT_PUBLIC_ALCHEMY_RPC_URL: z.url(),
+  NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: z.string().min(1),
+  NEXT_PUBLIC_CROWDFUNDING_FACTORY_CONTRACT_ADDRESS: z.string().min(1),
 });
 
 const env = envSchema.safeParse(process.env);

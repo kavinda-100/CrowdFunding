@@ -10,7 +10,7 @@ export const CONTRACT_ADDRESSES = {
 
   // Testnet addresses (Sepolia)
   SEPOLIA: {
-    CROWD_FUNDING_FACTORY: "0x0000000000000000000000000000000000000000",
+    CROWD_FUNDING_FACTORY: "0x1de0D33b2DeA06e04ed819c744d0B032028fe2c0",
   },
 
   // Local development (Anvil)
