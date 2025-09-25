@@ -10,7 +10,26 @@
 
 **Modern Web3 Frontend Built with Next.js 15 & React 19**
 
-*Complete DApp Interface with Beautiful UI/UX* ✨
+_Complete DApp Interface with Beautiful UI/UX_ ✨
+
+</div>
+
+## 🌐 Live Application
+
+<div align="center">
+
+### 🚀 **Application is LIVE on Vercel!** 🚀
+
+**🌟 Experience the DApp:**
+**[https://crowd-funding-omega-six.vercel.app/](https://crowd-funding-omega-six.vercel.app/)**
+
+![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel&logoColor=white)
+
+**🔗 Quick Access:**
+
+- **🌐 Live App:** [crowd-funding-omega-six.vercel.app](https://crowd-funding-omega-six.vercel.app/)
+- **📱 Mobile Optimized:** Fully responsive design
+- **🔗 Web3 Ready:** Connect your wallet and start exploring!
 
 </div>
 
@@ -75,21 +94,21 @@ All planned features have been successfully implemented and are ready for produc
 
 ## 🛠️ Technology Stack
 
-| Layer | Technology | Version | Purpose |
-|-------|------------|---------|---------|
-| **Framework** | Next.js | 15.x | React framework with App Router |
-| **Frontend Library** | React | 19.x | UI library with concurrent features |
-| **Language** | TypeScript | 5.x | Type-safe development |
-| **Styling** | TailwindCSS | 4.x | Utility-first CSS framework |
-| **UI Components** | ShadCN UI | Latest | Accessible component library |
-| **Web3 Integration** | Wagmi | v2 | React hooks for Ethereum |
-| **Wallet Connection** | RainbowKit | Latest | Multi-wallet connection interface |
-| **State Management** | TanStack Query | v5 | Data fetching and caching |
-| **Form Management** | React Hook Form | Latest | Performant form handling |
-| **Validation** | Zod | Latest | TypeScript-first schema validation |
-| **Icons** | Lucide React | Latest | Beautiful & consistent icons |
-| **Runtime** | Bun.js | 1.x | Fast JavaScript runtime |
-| **Deployment** | Vercel | Latest | Production deployment platform |
+| Layer                 | Technology      | Version | Purpose                             |
+| --------------------- | --------------- | ------- | ----------------------------------- |
+| **Framework**         | Next.js         | 15.x    | React framework with App Router     |
+| **Frontend Library**  | React           | 19.x    | UI library with concurrent features |
+| **Language**          | TypeScript      | 5.x     | Type-safe development               |
+| **Styling**           | TailwindCSS     | 4.x     | Utility-first CSS framework         |
+| **UI Components**     | ShadCN UI       | Latest  | Accessible component library        |
+| **Web3 Integration**  | Wagmi           | v2      | React hooks for Ethereum            |
+| **Wallet Connection** | RainbowKit      | Latest  | Multi-wallet connection interface   |
+| **State Management**  | TanStack Query  | v5      | Data fetching and caching           |
+| **Form Management**   | React Hook Form | Latest  | Performant form handling            |
+| **Validation**        | Zod             | Latest  | TypeScript-first schema validation  |
+| **Icons**             | Lucide React    | Latest  | Beautiful & consistent icons        |
+| **Runtime**           | Bun.js          | 1.x     | Fast JavaScript runtime             |
+| **Deployment**        | Vercel          | Latest  | Production deployment platform      |
 
 ## 🚀 Getting Started
 
@@ -275,7 +294,7 @@ vercel --prod
 
 ## 📱 Preview & Screenshots
 
-*Screenshots and live demos available in the deployed application*
+_Screenshots and live demos available in the deployed application_
 
 - **Homepage**: Clean, modern interface with featured campaigns
 - **Campaign Details**: Comprehensive campaign information
@@ -300,8 +319,8 @@ This project is licensed under the MIT License - see the [LICENSE](../LICENSE) f
 
 **🎉 CrowdFunding DApp Frontend - Complete & Ready for Production! 🎉**
 
-*Built with ❤️ using the latest Web3 technologies*
+_Built with ❤️ using the latest Web3 technologies_
 
-⭐ *If you found this project helpful, please give it a star!* ⭐
+⭐ _If you found this project helpful, please give it a star!_ ⭐
 
 </div>

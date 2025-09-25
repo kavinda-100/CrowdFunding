@@ -14,7 +14,14 @@
 
 ## 🚀 Live Deployment
 
-### 🌐 Sepolia Testnet Deployment
+### 🌐 Complete DApp Deployment
+
+**🎉 Full Stack Application is LIVE!**
+
+**🌟 Frontend Application (Vercel):**
+**[https://crowd-funding-omega-six.vercel.app/](https://crowd-funding-omega-six.vercel.app/)**
+
+**🏗️ Smart Contract (Sepolia Testnet):**
 
 The CrowdFundingFactory contract is **successfully deployed and verified** on Sepolia testnet:
 
@@ -36,10 +43,9 @@ The CrowdFundingFactory contract is **successfully deployed and verified** on Se
 
 **🔗 Quick Links:**
 
-- [View on Etherscan](https://sepolia.etherscan.io/address/0x1de0d33b2dea06e04ed819c744d0b032028fe2c0)
-- [Contract Source Code](https://sepolia.etherscan.io/address/0x1de0d33b2dea06e04ed819c744d0b032028fe2c0#code)
-
----
+- **🌐 Live DApp:** [crowd-funding-omega-six.vercel.app](https://crowd-funding-omega-six.vercel.app/)
+- **📜 Etherscan:** [View Contract](https://sepolia.etherscan.io/address/0x1de0d33b2dea06e04ed819c744d0b032028fe2c0)
+- **💻 Source Code:** [Contract Code](https://sepolia.etherscan.io/address/0x1de0d33b2dea06e04ed819c744d0b032028fe2c0#code)---
 
 ## 🏗️ Architecture Overview
 

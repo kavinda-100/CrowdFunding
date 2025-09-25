@@ -1,6 +1,4 @@
 {
-  "cSpell.words": [
-    "entrancy",
-    "Reentrancy"
-  ]
+  "cSpell.words": ["entrancy", "Reentrancy"],
+  "postman.settings.dotenv-detection-notification-visibility": false
 }

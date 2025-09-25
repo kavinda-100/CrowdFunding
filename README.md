@@ -20,13 +20,21 @@ _Empowering creators and supporting innovators through blockchain technology_
 
 <div>
 
-### 🎉 **Project is LIVE on Sepolia Testnet!** 🎉
+### 🎉 **Project is LIVE!** 🎉
+
+**🌟 Frontend Application:**
+**[https://crowd-funding-omega-six.vercel.app/](https://crowd-funding-omega-six.vercel.app/)**
+
+**🏗️ Smart Contract on Sepolia Testnet:**
 
 | Network             | Contract Address                                                                                                                | Status      |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | **Sepolia Testnet** | [`0x1de0D33b2DeA06e04ed819c744d0B032028fe2c0`](https://sepolia.etherscan.io/address/0x1de0d33b2dea06e04ed819c744d0b032028fe2c0) | ✅ Verified |
 
-**🔗 Etherscan:** [View Contract](https://sepolia.etherscan.io/address/0x1de0d33b2dea06e04ed819c744d0b032028fe2c0)
+**🔗 Quick Links:**
+
+- **🌐 Live App:** [crowd-funding-vercel.app](https://crowd-funding-omega-six.vercel.app/)
+- **📜 Smart Contract:** [View on Etherscan](https://sepolia.etherscan.io/address/0x1de0d33b2dea06e04ed819c744d0b032028fe2c0)
 
 **📊 Deployment Details:**
 
